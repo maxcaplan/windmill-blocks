@@ -1,0 +1,10 @@
+/**
+ * Editor block styles.
+ */
+
+:where(.wp-block-windmill-blocks-button) {
+	& .block-editor-inner-blocks .block-editor-block-list__layout > * {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+}

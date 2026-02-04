@@ -1,0 +1,96 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "windmill-blocks/button",
+	"parent": ["windmill-blocks/button-group"],
+	"version": "0.1.0",
+	"title": "Button",
+	"category": "windmill-blocks",
+	"icon": "button",
+	"description": "Customizable button element",
+	"keywords": ["link", "windmill"],
+	"example": {
+		"innerBlocks": [
+			{
+				"name": "core/paragraph",
+				"attributes": {
+					"content": "Find out more"
+				}
+			}
+		]
+	},
+	"attributes": {
+		"tagName": {
+			"type": "string",
+			"enum": ["a", "button"],
+			"default": "button"
+		}
+	},
+	"supports": {
+		"html": false,
+		"color": {
+			"text": true,
+			"background": true,
+			"gradients": true
+		},
+		"background": {
+			"backgroundImage": true,
+			"backgroundSize": true
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"textColumns": true,
+			"textIndent": true,
+			"__experimentalFontFamily": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalFontStyle": true,
+			"__experimentalFontWeight": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalTextTransform": true,
+			"__experimentalWritingMode": true,
+			"fitText": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
+		},
+		"shadow": true,
+		"allowedBlocks": true,
+		"position": { "sticky": true },
+		"dimensions": {
+			"height": true
+		},
+		"layout": {
+			"default": {
+				"type": "flex",
+				"flexWrap": "nowrap",
+				"justifyContent": "center",
+				"orientation": "horizontal",
+				"verticalAlignment": "center"
+			},
+			"allowJustification": true,
+			"allowOrientation": true,
+			"allowSizingOnChildren": true,
+			"allowVerticalAlignment": true,
+			"allowWrap": true,
+			"allowEditing": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"blockGap": true
+		},
+		"reusable": false,
+		"anchor": true
+	},
+	"textdomain": "windmill-blocks",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

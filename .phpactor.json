@@ -1,4 +1,4 @@
 {
-  "$schema": "/home/max/.config/phpactor.schema.json",
-  "php_code_sniffer.enabled": true
+	"$schema": "/home/max/.config/phpactor.schema.json",
+	"php_code_sniffer.enabled": true
 }

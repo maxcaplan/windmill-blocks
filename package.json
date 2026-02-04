@@ -1,0 +1,36 @@
+{
+	"name": "windmill-blocks",
+	"version": "0.1.0",
+	"description": "Extensible WordPress theme blocks for developers and designers",
+	"keywords": [
+		"wordpress-plugin",
+		"wordpress-blocks"
+	],
+	"homepage": "https://github.com/maxcaplan/windmill-blocks#readme",
+	"bugs": {
+		"url": "https://github.com/maxcaplan/windmill-blocks/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/maxcaplan/windmill-blocks.git"
+	},
+	"license": "GPL-3.0",
+	"author": "Max Caplan",
+	"scripts": {
+		"build": "wp-scripts build",
+		"start": "wp-scripts start",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"plugin-zip": "wp-scripts plugin-zip"
+	},
+	"devDependencies": {
+		"@wordpress/prettier-config": "^4.39.0",
+		"@wordpress/scripts": "^31.4.0",
+		"prettier": "3.8.1"
+	},
+	"dependencies": {
+		"@wordpress/block-editor": "^15.12.0",
+		"@wordpress/blocks": "^15.12.0",
+		"@wordpress/i18n": "^6.12.0"
+	}
+}

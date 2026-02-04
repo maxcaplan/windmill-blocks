@@ -1,0 +1,46 @@
+/**
+ * Frontend and editor block styles
+ */
+
+:where(.wp-block-windmill-blocks-button) {
+	/* Button style reset */
+	display: inline-block;
+	appearance: none;
+	box-sizing: border-box;
+	margin: 0;
+	border: none;
+	font: inherit;
+	hanging-punctuation: none;
+	line-height: inherit;
+	text-align: start;
+	text-decoration: none;
+	touch-action: manipulation;
+	cursor: pointer;
+	user-select: none;
+
+	/* Default styles */
+	padding: var(
+		--wp--preset--spacing--50,
+		calc(0.667em + 2px) calc(1.333em + 2px)
+	);
+	background-color: buttonface;
+	color: black;
+
+	& > * {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+
+	&.wp-block-windmill-blocks-button-is-layout-flex {
+		display: inline-flex;
+	}
+
+	&:hover {
+		color: inherit;
+	}
+}
+
+/* Remove global text decoration for link button */
+a.wp-block-windmill-blocks-button {
+	text-decoration: none;
+}
