@@ -1,0 +1,18 @@
+/*
+ * Main theme styles
+ */
+
+// Third-party styles
+@use "vendors";
+
+// Variables, mixins, and functions
+@use "abstract";
+
+// Global styles
+@use "base";
+
+// Layout styles
+@use "layout";
+
+// Component styles
+@use "components";

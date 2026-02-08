@@ -1,0 +1,3 @@
+/**
+ * Frontend editor script
+ */

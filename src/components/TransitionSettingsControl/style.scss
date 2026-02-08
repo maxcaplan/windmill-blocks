@@ -1,0 +1,53 @@
+.transition-settings-control {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+
+	#{&}__header {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		gap: 8px;
+
+		& > * {
+			margin: 0;
+		}
+	}
+
+	#{&}__body {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
+
+	#{&}__item {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		gap: 8px;
+
+		& > * {
+			margin: 0;
+		}
+	}
+
+	#{&}__item-select,
+	#{&}__item-text,
+	#{&}__item-range {
+		flex: 1;
+	}
+
+	#{&}__item-range {
+		.components-range-control__root {
+			flex-direction: row-reverse;
+			gap: 8px;
+		}
+		.components-range-control__number {
+			margin-left: 0 !important;
+		}
+		.components-range-control__slider {
+			margin: 0 -6px;
+		}
+	}
+}

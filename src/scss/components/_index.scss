@@ -1,0 +1,14 @@
+/*
+ * Reusable component styles
+ */
+
+/* Hide an element visually while keeping it visible to assistive technology */
+.windmill-blocks-visually-hidden {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}

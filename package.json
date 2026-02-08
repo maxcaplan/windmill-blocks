@@ -24,13 +24,18 @@
 		"plugin-zip": "wp-scripts plugin-zip"
 	},
 	"devDependencies": {
+		"@types/webpack": "^5.28.5",
 		"@wordpress/prettier-config": "^4.39.0",
 		"@wordpress/scripts": "^31.4.0",
-		"prettier": "3.8.1"
+		"prettier": "3.8.1",
+		"webpack": "^5.105.0",
+		"webpack-remove-empty-scripts": "^1.1.1"
 	},
 	"dependencies": {
 		"@wordpress/block-editor": "^15.12.0",
 		"@wordpress/blocks": "^15.12.0",
-		"@wordpress/i18n": "^6.12.0"
+		"@wordpress/i18n": "^6.12.0",
+		"@wordpress/icons": "^11.6.0",
+		"lodash": "^4.17.23"
 	}
 }

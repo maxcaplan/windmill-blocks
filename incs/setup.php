@@ -14,6 +14,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Register custom block categories
+ *
+ * @param array  $block_categories Block categories array.
+ * @param object $editor_context Editor context object.
  */
 function register_block_categories( $block_categories, $editor_context ) {
 	if ( ! empty( $editor_context->post ) ) {
