@@ -1,5 +1,6 @@
 import { merge } from 'lodash';
 import objectScan from 'object-scan';
+import { deepFilter } from '../objects';
 
 /**
  * Make all properties in `T` deeply nullable and optional
@@ -29,7 +30,7 @@ import objectScan from 'object-scan';
  * @param {K} attribute_key Key of attribute to set
  * @returns {(value: DeepNullablePartial<T[K]>) => void} Attribute setter
  *
- * @throws Will throw an error if `attribute_key` has an asociated value that is not an `Object` or `undefined`
+ * @throws Will throw an error if `attribute_key` has an associated value that is not an `Object` or `undefined`
  */
 export function useSetObjectAttribute(props, attribute_key) {
 	const { attributes, setAttributes } = props;
@@ -44,43 +45,24 @@ export function useSetObjectAttribute(props, attribute_key) {
 		);
 	}
 
-	/** Remove all null properties and subproperties in an object */
-	const deepRemoveNull = (obj) => {
-		Object.entries(obj).forEach(([key, value]) => {
-			if (value && typeof value === 'object') {
-				deepRemoveNull(value);
-			}
-
-			if (
-				(value &&
-					typeof value === 'object' &&
-					!Object.keys(value).length) ||
-				value === null ||
-				value === undefined
-			) {
-				delete obj[key];
-			}
-		});
-		return obj;
-	};
-
 	/**
 	 * Object attribute setter
 	 *
 	 * @param {DeepNullablePartial<T[K]>} value
 	 */
 	const setObjectAttribute = (value) => {
-		// Create clone of attribute value
-		const new_attributes = structuredClone(attributes) || {};
+		// Merge attribute with new value
+		const merged_value = merge(attributes[attribute_key], value);
 
-		// Merge cloned attributes with update values
-		merge(new_attributes, { [attribute_key]: value });
-
-		// Delete any properties set to null
-		deepRemoveNull(new_attributes);
+		// Delete any null attribute properties
+		const new_attribute = deepFilter(
+			merged_value,
+			({ value }) => value !== null
+		);
 
 		// Set new attribute value
-		setAttributes(new_attributes);
+		/** @ts-ignore */
+		setAttributes({ [attribute_key]: new_attribute });
 	};
 
 	return setObjectAttribute;

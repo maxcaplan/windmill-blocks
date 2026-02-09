@@ -1,5 +1,6 @@
 /** Wordpress dependencies */
 import { __ } from '@wordpress/i18n';
+import { __experimentalToolsPanelItem as ToolPanelItem } from '@wordpress/components';
 
 /** Internal dependencies */
 import PresetSettingControl from './preset-setting-control';
@@ -15,6 +16,19 @@ import {
 import './style.scss';
 
 /**
+ * @typedef TransitionSettingsControlProps
+ * @property {string} label Control label
+ * @property {Boolean} [hideLabelFromVision] Visually hide control label
+ * @property {number} [durationValue] Transition duration control value
+ * @property {(value: number|null) => void} [onDurationChange] Transition duration control onChange event handler
+ * @property {string} [timingValue] Transition timing function control value
+ * @property {(value: string|null) => void} [onTimingChange] Transition timing function control onChange event handler
+ * @property {Boolean} [withToolPanelItem]
+ * @property {(string|null)} [panelId]
+ * @property {boolean} [defaultChecked]
+ */
+
+/**
  * Static functions
  */
 
@@ -24,7 +38,7 @@ import './style.scss';
  * Returns undefined if number is undefined
  *
  * @param {Number} [value]
- * @returns {(String|undefined)}
+ * @returns {(string|undefined)}
  */
 const settingNumberToString = (value) => {
 	return value?.toString() || undefined;
@@ -33,32 +47,72 @@ const settingNumberToString = (value) => {
 /**
  * Convert a setting string value to a number.
  *
- * Returns undefined if string is undefined not a valid number.
+ * Returns undefined if value is not a valid number.
  *
- * @param {(String|null)} value
- * @returns {(Number|undefined)}
+ * @param {(string|null)} value
+ * @returns {(number|undefined)}
  */
 const settingStringToNumber = (value) => {
 	const num_value = value === null ? NaN : parseInt(value);
 	return Number.isNaN(num_value) ? undefined : num_value;
 };
 
-const settingStringtoString = (value) => {};
-
 /**
  * Components
  */
 
 /**
+ * Wrap component with ToolPanelItem component
+ *
+ * @param {TransitionSettingsControlProps & { children: React.ReactNode }} props
+ * @returns
+ */
+const WithToolPanelItem = (props) => {
+	const {
+		label,
+		durationValue,
+		timingValue,
+		onDurationChange,
+		onTimingChange,
+		panelId,
+		defaultChecked,
+		children,
+	} = props;
+
+	const hasValue = (...values) => {
+		return values.some((value) => value !== undefined && value !== '');
+	};
+
+	const resetAttributes = () => {
+		onDurationChange?.(null);
+		onTimingChange?.(null);
+	};
+
+	return (
+		<ToolPanelItem
+			label={label}
+			hasValue={() => hasValue(durationValue, timingValue)}
+			panelId={panelId}
+			className={'transition-settings-control__tool-panel-item'}
+			defaultChecked={defaultChecked}
+			onDeselect={() => {
+				console.log('deselect');
+				resetAttributes();
+			}}
+			resetAllFilter={() => {
+				console.log('reset all');
+				resetAttributes();
+			}}
+		>
+			{children}
+		</ToolPanelItem>
+	);
+};
+
+/**
  * Block editor transition attribute setting controls
  *
- * @param {Object} props Component props
- * @param {String} [props.label] Control label
- * @param {Boolean} [props.hideLabelFromVision] Visually hide control label
- * @param {Number} [props.durationValue] Transition duration control value
- * @param {(value: Number|null) => void} [props.onDurationChange] Transition duration control onChange event handler
- * @param {String} [props.timingValue] Transition timing function control value
- * @param {(value: String|null) => void} [props.onTimingChange] Transition timing function control onChange event handler
+ * @param {TransitionSettingsControlProps} props
  * @returns {React.JSX.Element}
  */
 export default function TransitionSettingsControl(props) {
@@ -69,15 +123,16 @@ export default function TransitionSettingsControl(props) {
 		onDurationChange,
 		timingValue,
 		onTimingChange,
+		withToolPanelItem,
 	} = props;
 
-	return (
+	const component_element = (
 		<div className="transition-settings-control">
 			<div
 				className={`transition-settings-control__header${hideLabelFromVision ? ' windmill-blocks-visually-hidden' : ''}`}
 			>
 				<h3 className="transition-settings-control__heading">
-					{label || __('Transition')}
+					{label}
 				</h3>
 			</div>
 
@@ -89,7 +144,7 @@ export default function TransitionSettingsControl(props) {
 					icon="clock"
 					iconSize={24}
 					presetOptions={duration_options}
-					value={settingNumberToString(durationValue)}
+					value={durationValue}
 					onChange={(value) => {
 						const num_value = settingStringToNumber(value);
 						onDurationChange?.(
@@ -112,13 +167,24 @@ export default function TransitionSettingsControl(props) {
 					iconSize={24}
 					presetOptions={timing_options}
 					value={timingValue}
-					onChange={(value) =>
+					onChange={(value) => {
 						onTimingChange?.(
 							value === DEFAULT_PRESET_VALUE ? null : value
-						)
-					}
+						);
+					}}
 				/>
 			</div>
 		</div>
 	);
+
+	// Conditionally wrap component with ToolPanelItem component
+	if (withToolPanelItem) {
+		return (
+			<WithToolPanelItem {...props}>
+				{component_element}
+			</WithToolPanelItem>
+		);
+	} else {
+		return component_element;
+	}
 }

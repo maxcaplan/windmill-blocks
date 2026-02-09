@@ -34,8 +34,8 @@ import { DEFAULT_PRESET_VALUE, isPresetValue, presetValue } from './presets';
  * @param {number} [props.rangeMax]
  * @param {(number|"any")} [props.step]
  * @param {TypeDefs.PresetSelectControlOptions} [props.presetOptions]
- * @param {String} [props.value]
- * @param {(value: String|null) => void} [props.onChange]
+ * @param {(string|number)} [props.value]
+ * @param {(value: string|null) => void} [props.onChange]
  * @returns {React.JSX.Element}
  */
 export default function PresetSettingControl(props) {
@@ -58,13 +58,13 @@ export default function PresetSettingControl(props) {
 
 	// Whether value is a preset value state
 	const [hasCustomValue, setHasCustomValue] = useState(
-		isPresetValue(value, presetOptions)
+		value !== undefined && !isPresetValue(value, presetOptions)
 	);
 
 	/**
 	 * Format string for select control
 	 *
-	 * @param {String} [value]
+	 * @param {(string|number)} [value]
 	 * @param {TypeDefs.PresetSelectControlOptionValues} [preset_options]
 	 * @returns {TypeDefs.PresetOptionValue}
 	 */
@@ -75,11 +75,11 @@ export default function PresetSettingControl(props) {
 	/**
 	 * Format string for text control
 	 *
-	 * @param {String} [value]
+	 * @param {(string|number)} [value]
 	 * @returns {String}
 	 */
 	const textControlValue = (value) => {
-		value = value || '';
+		value = typeof value === 'number' ? value.toString() : value || '';
 		// Convert default preset value to empty string
 		return value.trim() === DEFAULT_PRESET_VALUE ? '' : value;
 	};
@@ -87,13 +87,19 @@ export default function PresetSettingControl(props) {
 	/**
 	 * Format string for range control
 	 *
-	 * @param {String} [value]
+	 * @param {(string|number)} [value]
 	 * @param {Number} [default_value]
 	 * @returns {Number}
 	 */
 	const rangeControlValue = (value, default_value) => {
-		const num_value = value !== undefined ? parseFloat(value) : NaN;
-		return Number.isNaN(num_value) ? default_value || 0 : num_value;
+		// Convert value to a number value
+		if (value === undefined) {
+			value = NaN;
+		} else if (typeof value === 'string') {
+			value = parseFloat(value);
+		}
+
+		return Number.isNaN(value) ? default_value || 0 : value;
 	};
 
 	/**

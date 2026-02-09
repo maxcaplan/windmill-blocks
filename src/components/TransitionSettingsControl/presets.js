@@ -1,11 +1,9 @@
 import * as TypeDefs from './typedefs';
 
-import { isString } from 'lodash';
-
 export const DEFAULT_PRESET_VALUE = 'default';
 
 /**
- * Presets
+ * Preset Values
  */
 
 /** Named CSS timing functions */
@@ -45,7 +43,7 @@ export const duration_options = [
 ];
 
 /**
- * Utility functions
+ * Utility Functions
  */
 
 /**
@@ -56,7 +54,14 @@ export const duration_options = [
  * @returns {(TypeDefs.PresetOptionValue|undefined)}
  */
 export const findPreset = (value, preset_options) => {
-	value = isString(value) ? value.trim() : value;
+	if (typeof value === 'number') {
+		value = value.toString();
+	}
+	if (typeof value !== 'string') {
+		return undefined;
+	}
+
+	value = value.trim();
 	return preset_options?.find((option) => option.value === value)?.value;
 };
 
@@ -74,7 +79,7 @@ export const isPresetValue = (value, preset_options) => {
 /**
  * Returns the first preset value that matches a value, and the default value otherwise.
  *
- * @param {String} [value] Value to get a preset value for
+ * @param {(string|number)} [value] Value to get a preset value for
  * @param {TypeDefs.PresetSelectControlOptionValues} [preset_options] Preset options to check against
  * @returns {TypeDefs.PresetOptionValue}
  */
