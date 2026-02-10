@@ -1,3 +1,5 @@
+import { cloneDeep, isEmpty } from 'lodash';
+
 /**
  * Construct a type with all properties and subproperties of `Type` set to optional.
  * @template Type
@@ -50,18 +52,20 @@ export function propertyOrValue(value, key) {
  * @returns {DeepPartial<T>}
  */
 export function deepFilter(object, predicate) {
-	return deepFilterInternal(object, structuredClone(object), predicate);
+	return deepFilterInternal(object, predicate);
 }
 
 /**
  * @template {Record<string, any>} T
  *
  * @param {T} base_object
- * @param {any} object
  * @param {DeepFilterCallback} predicate
+ * @param {any} [object]
  * @returns {DeepPartial<T>}
  */
-function deepFilterInternal(base_object, object, predicate) {
+function deepFilterInternal(base_object, predicate, object) {
+	object = object === undefined ? cloneDeep(base_object) : object;
+
 	// Iterate over current objects properties
 	Object.entries(object).forEach(([key, value]) => {
 		// If property of current object is an object with properties, traverse said object
@@ -69,12 +73,12 @@ function deepFilterInternal(base_object, object, predicate) {
 			!!value &&
 			!Array.isArray(value) &&
 			typeof value === 'object' &&
-			Object.entries(value).length > 0
+			!isEmpty(value)
 		) {
-			deepFilterInternal(base_object, value, predicate);
+			deepFilterInternal(base_object, predicate, value);
 
 			// Remove empty object properties
-			if (Object.entries(value).length === 0) {
+			if (isEmpty(value)) {
 				delete object[key];
 			}
 		}

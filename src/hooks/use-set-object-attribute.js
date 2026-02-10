@@ -1,5 +1,4 @@
-import { merge } from 'lodash';
-import objectScan from 'object-scan';
+import { cloneDeep, isEmpty, merge } from 'lodash';
 import { deepFilter } from '../util/objects';
 
 /**
@@ -51,22 +50,27 @@ export default function useSetObjectAttribute(props, attribute_key) {
 	 * @param {DeepNullablePartial<T[K]>} value
 	 */
 	const setObjectAttribute = (value) => {
-		if (!value || Object.entries(value).length <= 0) {
+		if (!value || isEmpty(value)) {
 			return;
 		}
 
-		// Merge attribute with new value
-		const merged_value = merge(attributes[attribute_key], value);
+		// Clone attribute value and merge with new value
+		const new_attribute = cloneDeep(attributes[attribute_key]);
+		merge(new_attribute, value);
 
 		// Delete any null or undefined attribute properties
-		const new_attribute = deepFilter(
-			merged_value,
+		const filtered_attribute = deepFilter(
+			new_attribute,
 			({ value }) => value !== null && value !== undefined
 		);
 
 		// Set new attribute value
 		/** @ts-ignore */
-		setAttributes({ [attribute_key]: new_attribute });
+		setAttributes({
+			[attribute_key]: isEmpty(filtered_attribute)
+				? undefined
+				: filtered_attribute,
+		});
 	};
 
 	return setObjectAttribute;
