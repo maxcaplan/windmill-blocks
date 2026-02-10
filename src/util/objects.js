@@ -14,6 +14,33 @@
  */
 
 /**
+ * Return a property of a value if it is an object, and the value otherwise
+ *
+ * @example
+ * keyOrValue({ foo: "bar" }, "foo") // returns: "bar"
+ * keyOrValue("foobar", "foo") // returns: "foobar"
+ *
+ * @template {Record<string, any>} T
+ * @template {keyof T} K
+ *
+ * @param {T|any} [value]
+ * @param {K} [key]
+ * @returns {(T[K]|any)}
+ */
+export function propertyOrValue(value, key) {
+	if (
+		!!value &&
+		key !== undefined &&
+		!Array.isArray(value) &&
+		typeof value === 'object'
+	) {
+		return value[key];
+	}
+
+	return value;
+}
+
+/**
  * Return a deep copy of an objects properties that meet the condition specified in a callback function.
  *
  * @template {Record<string, any>} T

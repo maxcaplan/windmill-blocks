@@ -1,6 +1,6 @@
 import { merge } from 'lodash';
 import objectScan from 'object-scan';
-import { deepFilter } from '../objects';
+import { deepFilter } from '../util/objects';
 
 /**
  * Make all properties in `T` deeply nullable and optional
@@ -32,7 +32,7 @@ import { deepFilter } from '../objects';
  *
  * @throws Will throw an error if `attribute_key` has an associated value that is not an `Object` or `undefined`
  */
-export function useSetObjectAttribute(props, attribute_key) {
+export default function useSetObjectAttribute(props, attribute_key) {
 	const { attributes, setAttributes } = props;
 
 	// Ensure attribute value is an object if defined
@@ -51,13 +51,19 @@ export function useSetObjectAttribute(props, attribute_key) {
 	 * @param {DeepNullablePartial<T[K]>} value
 	 */
 	const setObjectAttribute = (value) => {
+		if (!value || Object.entries(value).length <= 0) {
+			return;
+		}
+
+		console.log(value);
+
 		// Merge attribute with new value
 		const merged_value = merge(attributes[attribute_key], value);
 
-		// Delete any null attribute properties
+		// Delete any null or undefined attribute properties
 		const new_attribute = deepFilter(
 			merged_value,
-			({ value }) => value !== null
+			({ value }) => value !== null && value !== undefined
 		);
 
 		// Set new attribute value

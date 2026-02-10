@@ -95,14 +95,8 @@ const WithToolPanelItem = (props) => {
 			panelId={panelId}
 			className={'transition-settings-control__tool-panel-item'}
 			defaultChecked={defaultChecked}
-			onDeselect={() => {
-				console.log('deselect');
-				resetAttributes();
-			}}
-			resetAllFilter={() => {
-				console.log('reset all');
-				resetAttributes();
-			}}
+			onDeselect={resetAttributes}
+			resetAllFilter={resetAttributes}
 		>
 			{children}
 		</ToolPanelItem>

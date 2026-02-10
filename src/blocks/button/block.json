@@ -22,8 +22,24 @@
 	"attributes": {
 		"tagName": {
 			"type": "string",
-			"enum": ["a", "button"],
+			"enum": ["button", "a"],
 			"default": "button"
+		},
+		":hover": {
+			"type": "object",
+			"default": {}
+		},
+		"hoverTextColor": {
+			"type": "string"
+		},
+		"customHoverTextColor": {
+			"type": "string"
+		},
+		"hoverBackgroundColor": {
+			"type": "string"
+		},
+		"customHoverBackgroundColor": {
+			"type": "string"
 		}
 	},
 	"supports": {

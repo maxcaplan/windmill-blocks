@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "windmill-blocks/button-group",
 	"version": "0.1.0",
-	"title": "Button Group",
+	"title": "Custom Buttons",
 	"category": "windmill-blocks",
 	"icon": "button",
 	"description": "Group of one or more customizable buttons",

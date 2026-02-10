@@ -14,6 +14,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Register block
  */
+// @ts-ignore
 registerBlockType(metadata.name, {
 	...metadata,
 	/** Editor component */

@@ -2,26 +2,27 @@
  * Wordpress dependencies
  */
 import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
-import { BlockSaveProps } from '@wordpress/blocks';
+
+/**
+ *
+ * @param {Record<string, unknown> & { tagName?: "a" | "button", role: string }} props
+ */
+const BlockTag = ({ tagName, ...blockProps }) => {
+	return tagName === 'a' ? <a {...blockProps} /> : <button {...blockProps} />;
+};
 
 /**
  * Serialized block component
  *
- * @param {BlockSaveProps<{}>} props
+ * @param {import("./typedefs").WindmillBlocksButtonSaveProps} props
  * @returns {React.JSX.Element}
  */
 export default function Save(props) {
 	const { attributes } = props;
 	const { tagName } = attributes;
 
-	const isLink = tagName === 'a';
-
 	const blockProps = useBlockProps.save();
 	const innerBlockProps = useInnerBlocksProps.save(blockProps);
 
-	if (isLink) {
-		return <a role="button" {...innerBlockProps} />;
-	} else {
-		return <button role="button" {...innerBlockProps} />;
-	}
+	return <BlockTag tagName={tagName} role="button" {...innerBlockProps} />;
 }
