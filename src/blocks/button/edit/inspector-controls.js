@@ -1,4 +1,4 @@
-import * as TypeDefs from './typedefs';
+import * as TypeDefs from '../typedefs';
 
 import { useEffect, useState } from 'react';
 
@@ -10,8 +10,6 @@ import { SelectControl } from '@wordpress/components';
 import {
 	InspectorAdvancedControls,
 	InspectorControls,
-	useBlockProps,
-	useInnerBlocksProps,
 	// @ts-ignore
 	__experimentalUseMultipleOriginColorsAndGradients as useMultipleOriginColorsAndGradients,
 	// @ts-ignore
@@ -23,11 +21,6 @@ import {
  */
 import { TransitionSettingsControl } from '@/components';
 import { useGetColorPreset, useSetObjectAttribute } from '@/hooks';
-
-/**
- * Editor styles
- */
-import './styles/editor.scss';
 import { propertyOrValue } from '@/util/objects';
 import { createPresetString, presetStringParts } from '@/util/theme';
 
@@ -61,19 +54,14 @@ const parseColorPreset = (color) => {
 };
 
 /**
- * Block editor component
+ * Button block editor inspector controls component
  *
  * @param {TypeDefs.WindmillBlocksButtonEditProps} props
  * @returns {React.JSX.Element}
  */
-export default function Edit(props) {
+export default function ButtonInspectorControls(props) {
 	const { attributes, setAttributes, clientId } = props;
 	const { ':hover': hover } = attributes;
-
-	const tagName =
-		attributes.tagName === 'a' || attributes.tagName === 'button'
-			? attributes.tagName
-			: 'button';
 
 	/**
 	 * Hooks
@@ -87,9 +75,6 @@ export default function Edit(props) {
 
 	/** Color gradient dropdown control settings */
 	const colorGradientSettings = useMultipleOriginColorsAndGradients();
-
-	const blockProps = useBlockProps();
-	const innerBlockProps = useInnerBlocksProps(blockProps);
 
 	/**
 	 * State
@@ -135,9 +120,6 @@ export default function Edit(props) {
 
 	return (
 		<>
-			{/* Block */}
-			<div {...innerBlockProps} />
-
 			{/* Inspector */}
 			<InspectorControls group="color">
 				<ColorGradientSettingsDropdown
@@ -206,7 +188,12 @@ export default function Edit(props) {
 						{ value: 'button', label: __('Default(<button>)') },
 						{ value: 'a', label: '<a>' },
 					]}
-					value={tagName}
+					value={
+						attributes.tagName === 'a' ||
+						attributes.tagName === 'button'
+							? attributes.tagName
+							: 'button'
+					}
 					onChange={(value) => setAttributes({ tagName: value })}
 					__next40pxDefaultSize
 					__nextHasNoMarginBottom

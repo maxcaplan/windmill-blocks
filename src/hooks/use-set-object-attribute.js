@@ -55,8 +55,6 @@ export default function useSetObjectAttribute(props, attribute_key) {
 			return;
 		}
 
-		console.log(value);
-
 		// Merge attribute with new value
 		const merged_value = merge(attributes[attribute_key], value);
 
