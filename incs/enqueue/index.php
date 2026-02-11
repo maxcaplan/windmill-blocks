@@ -7,6 +7,11 @@
 
 namespace WindmillBlocks\Enqueue;
 
+require_once WINDMILL_BLOCKS_PLUGIN_DIR . 'incs/setup/global-styles.php';
+
+use function WindmillBlocks\Setup\get_global_stylesheet;
+
+
 /**
  * Enqueue plugin scripts hook
  */
@@ -84,6 +89,29 @@ function enqueue_editor_content_styles() {
 	);
 }
 add_action( 'enqueue_block_assets', __NAMESPACE__ . '\enqueue_editor_content_styles' );
+
+/**
+ * Enqueue editor plugin global styles hook
+ */
+function enqueue_editor_global_styles() {
+	if ( ! is_admin() ) {
+		return;
+	}
+
+	$stylesheet_path = get_global_stylesheet();
+	$asset_meta      = get_asset_meta( WINDMILL_BLOCKS_PLUGIN_DIR . 'css/global-styles.asset.php' );
+	if ( is_null( $asset_meta ) ) {
+		return;
+	}
+
+	wp_enqueue_style(
+		'windmill-blocks-editor-global-styles',
+		WINDMILL_BLOCKS_PLUGIN_URL . $stylesheet_path,
+		$asset_meta['dependencies'],
+		$asset_meta['version']
+	);
+}
+add_action( 'enqueue_block_assets', __NAMESPACE__ . '\enqueue_editor_global_styles' );
 
 /**
  * Try to get an asset meta file at a given path

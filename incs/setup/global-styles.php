@@ -5,7 +5,7 @@
  * @package WindmillBlocks;
  */
 
-namespace WindmillBlocks\StyleGeneration;
+namespace WindmillBlocks\Setup;
 
 use WP_Error;
 
@@ -37,18 +37,18 @@ add_action( 'wp_head', __NAMESPACE__ . '\inline_plugin_global_styles', 100 );
  * @throws WP_Error - Failed to write generated stylesheet to file.
  */
 function get_global_stylesheet() {
-	$global_styles_cache_dir      = WINDMILL_BLOCKS_PLUGIN_DIR . 'css/';
+	$global_styles_dir            = WINDMILL_BLOCKS_PLUGIN_DIR . 'css/';
 	$global_stylesheet_basename   = 'global-styles';
-	$global_stylesheet_path       = $global_styles_cache_dir . $global_stylesheet_basename . '.css';
-	$global_stylesheet_asset_path = $global_styles_cache_dir . $global_stylesheet_basename . '.asset.php';
+	$global_stylesheet_path       = $global_styles_dir . $global_stylesheet_basename . '.css';
+	$global_stylesheet_asset_path = $global_styles_dir . $global_stylesheet_basename . '.asset.php';
 
 	// Create global stylesheet if it doesn't exist.
-	if ( ! is_readable( $global_stylesheet_path ) ) {
+	if ( ! is_global_stylesheet_updated() ) {
 		$stylesheet = generate_global_stylesheet();
 
 		// Create style cache dir if it doesn't exist.
-		if ( ! is_dir( $global_styles_cache_dir ) ) {
-			if ( ! wp_mkdir_p( $global_styles_cache_dir ) ) {
+		if ( ! is_dir( $global_styles_dir ) ) {
+			if ( ! wp_mkdir_p( $global_styles_dir ) ) {
 				throw new WP_Error( 'Error creating global stylesheet: Failed to create stylesheet directory.' );
 			}
 		}
@@ -57,18 +57,45 @@ function get_global_stylesheet() {
 		$stylesheet_write = file_put_contents( $global_stylesheet_path, $stylesheet['data'] );
 
 		if ( false === $stylesheet_write ) {
-			throw new WP_Error( 'Error creating global stylesheet: Failed to write stylesheet to file.' );
+			throw new WP_Error( 'Error creating plugin global stylesheet: Failed to write stylesheet to file.' );
 		}
 
+		// Write stylesheet meta data to file.
 		$asset_data  = "<?php return array('dependencies' => array(), 'version' => '" . $stylesheet['version'] . "');";
 		$asset_write = file_put_contents( $global_stylesheet_asset_path, $asset_data );
 
 		if ( false === $asset_write ) {
-			throw new WP_Error( 'Error creating global stylesheet: Failed to write stylesheet asset file to file.' );
+			throw new WP_Error( 'Error creating plugin global stylesheet: Failed to write stylesheet asset file to file.' );
 		}
+
+		// Update stylesheet modified time option.
+		update_option( 'windmill-blocks-global-style-hash', $stylesheet['hash'] );
 	}
 
 	return 'css/' . $global_stylesheet_basename . '.css';
+}
+
+/**
+ * Check if plugin global stylesheet has been generated since the last update of theme.json
+ *
+ * @return bool
+ * @throws WP_Error - Fails to check theme.json file.
+ */
+function is_global_stylesheet_updated() {
+	$stylesheet_file = WINDMILL_BLOCKS_PLUGIN_DIR . 'css/global-styles.css';
+
+	if ( ! is_readable( $stylesheet_file ) ) {
+		return false;
+	}
+
+	$stylesheet_hash = get_option( 'windmill-blocks-global-style-hash' );
+	$global_settings = wp_get_global_settings();
+
+	if ( false === $stylesheet_hash || false === $global_settings ) {
+		return false;
+	}
+
+	return $stylesheet_hash === $global_settings;
 }
 
 /**
@@ -106,6 +133,7 @@ function generate_global_stylesheet() {
 		'data'         => $stylesheet,
 		'dependencies' => array(),
 		'version'      => bin2hex( random_bytes( 10 ) ), // Random alpha numeric version string.
+		'hash'         => $global_settings,
 	);
 }
 
