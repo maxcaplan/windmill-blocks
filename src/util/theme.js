@@ -41,3 +41,50 @@ export function presetStringParts(preset_string) {
 	const [preset, slug] = preset_string.slice(11).split('|');
 	return { preset: preset || undefined, slug: slug || undefined };
 }
+
+/**
+ * Create a class name for a preset string
+ *
+ * @param {string} [preset]
+ * @param {string} [prefix]
+ * @param {string} [suffix]
+ * @returns {(string|undefined)}
+ */
+export function presetClassName(preset, prefix, suffix) {
+	const preset_parts = presetStringParts(preset);
+
+	if (
+		preset_parts === undefined ||
+		preset_parts.preset === undefined ||
+		preset_parts.slug === undefined
+	) {
+		return undefined;
+	}
+
+	prefix = prefix === undefined ? '' : `${prefix}-`;
+	suffix = suffix === undefined ? '' : `-${suffix}`;
+
+	return `${prefix}${preset_parts.slug}${suffix}`;
+}
+
+/**
+ * Create a css style value for a preset string
+ *
+ * @param {string} [preset_string]
+ * @returns
+ */
+export function presetStyleValue(preset_string) {
+	const preset_parts = presetStringParts(preset_string);
+
+	if (
+		preset_parts === undefined ||
+		preset_parts.preset === undefined ||
+		preset_parts.slug === undefined
+	) {
+		return undefined;
+	}
+
+	const { preset, slug } = preset_parts;
+
+	return `var(--wp--preset--${preset}--${slug})`;
+}

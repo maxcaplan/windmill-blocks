@@ -19,14 +19,17 @@
 	"scripts": {
 		"build": "wp-scripts build",
 		"start": "wp-scripts start",
+		"test:unit": "wp-scripts test-unit-js",
 		"lint:css": "wp-scripts lint-style",
 		"lint:js": "wp-scripts lint-js",
 		"plugin-zip": "wp-scripts plugin-zip"
 	},
 	"devDependencies": {
+		"@jest/globals": "^30.2.0",
 		"@types/webpack": "^5.28.5",
 		"@wordpress/prettier-config": "^4.39.0",
 		"@wordpress/scripts": "^31.4.0",
+		"jest": "^30.2.0",
 		"prettier": "3.8.1",
 		"webpack": "^5.105.0",
 		"webpack-remove-empty-scripts": "^1.1.1"
@@ -38,6 +41,7 @@
 		"@wordpress/editor": "^14.39.0",
 		"@wordpress/i18n": "^6.12.0",
 		"@wordpress/icons": "^11.6.0",
+		"clsx": "^2.1.1",
 		"lodash": "^4.17.23",
 		"react": "^19.2.4"
 	}

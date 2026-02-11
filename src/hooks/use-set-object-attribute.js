@@ -55,7 +55,9 @@ export default function useSetObjectAttribute(props, attribute_key) {
 		}
 
 		// Clone attribute value and merge with new value
-		const new_attribute = cloneDeep(attributes[attribute_key]);
+		const new_attribute = isEmpty(attributes[attribute_key])
+			? {}
+			: cloneDeep(attributes[attribute_key]);
 		merge(new_attribute, value);
 
 		// Delete any null or undefined attribute properties

@@ -2,15 +2,14 @@
  * Wordpress dependencies
  */
 import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
-import { BlockSaveProps } from '@wordpress/blocks';
 
 /**
  * Serialized block component
  *
- * @param {BlockSaveProps<{}>} props
+ * @param {import('@wordpress/blocks').BlockSaveProps<{}>} props
  * @returns {React.JSX.Element}
  */
-export default function Save() {
+export default function Save(props) {
 	return (
 		<div {...useBlockProps.save()}>
 			<InnerBlocks.Content />

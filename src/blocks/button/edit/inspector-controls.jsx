@@ -1,7 +1,5 @@
 import * as TypeDefs from '../typedefs';
 
-import { useEffect, useState } from 'react';
-
 /**
  * Wordpress dependencies
  */
@@ -21,37 +19,7 @@ import {
  */
 import { TransitionSettingsControl } from '@/components';
 import { useGetColorPreset, useSetObjectAttribute } from '@/hooks';
-import { propertyOrValue } from '@/util/objects';
-import { createPresetString, presetStringParts } from '@/util/theme';
-
-/**
- * @typedef {(import('@/hooks/use-get-color-preset').ColorPreset|string|undefined)} ColorStateValue
- */
-
-/**
- * Static functions
- */
-
-/**
- * @param {ColorStateValue} color
- * @returns {string|undefined}
- */
-const getColorValue = (color) => {
-	return propertyOrValue(color, 'color');
-};
-
-/**
- * @param {ColorStateValue} color
- * @returns {string|undefined}
- */
-const parseColorPreset = (color) => {
-	// Return color if it is not a color preset object
-	if (color === undefined || typeof color === 'string') {
-		return color;
-	}
-	// Create preset string for color preset slug
-	return createPresetString(color.slug, 'color');
-};
+import { createPresetString } from '@/util/theme';
 
 /**
  * Button block editor inspector controls component
@@ -61,7 +29,7 @@ const parseColorPreset = (color) => {
  */
 export default function ButtonInspectorControls(props) {
 	const { attributes, setAttributes, clientId } = props;
-	const { ':hover': hover } = attributes;
+	const { ':hover': hover, transition } = attributes;
 
 	/**
 	 * Hooks
@@ -69,6 +37,8 @@ export default function ButtonInspectorControls(props) {
 
 	/** ':hover' attribute setter */
 	const setHoverAttribute = useSetObjectAttribute(props, ':hover');
+	/** transition attribute setter */
+	const setTransitionAttribute = useSetObjectAttribute(props, 'transition');
 
 	/** Theme color preset getter */
 	const getColorPreset = useGetColorPreset();
@@ -77,50 +47,56 @@ export default function ButtonInspectorControls(props) {
 	const colorGradientSettings = useMultipleOriginColorsAndGradients();
 
 	/**
-	 * State
+	 * Functions
 	 */
-
-	/** Hover text color state */
-	const [hoverTextColor, setHoverTextColor] = useState(
-		getColorPreset(
-			presetStringParts(hover?.color?.text)?.slug || hover?.color?.text
-		)
-	);
-
-	/** Hover background color state */
-	const [hoverBackgroundColor, setHoverBackgroundColor] = useState(
-		getColorPreset(
-			presetStringParts(hover?.color?.background)?.slug ||
-				hover?.color?.background
-		)
-	);
 
 	/**
-	 * Effects
+	 * Returns color value string for a hover attribute color, and undefined otherwise
+	 *
+	 * @param {(string|undefined)} value
+	 */
+	const hoverColorValue = (value) => {
+		// Get color preset for value
+		let preset = getColorPreset(value);
+
+		// If color is preset, get preset color value
+		if (preset !== undefined && typeof preset !== 'string') {
+			preset = preset.color;
+		}
+
+		return preset;
+	};
+
+	/**
+	 * Event Handlers
 	 */
 
-	useEffect(() => {
-		const text_value = parseColorPreset(hoverTextColor);
-		const background_value = parseColorPreset(hoverBackgroundColor);
+	/**
+	 * Hover color control value change event handler
+	 *
+	 * @param {any} value
+	 * @param {keyof TypeDefs.WindmillBlocksButtonHoverColor} color_key
+	 */
+	const onHoverColorChange = (value, color_key) => {
+		// Get color preset for value
+		let preset = getColorPreset(value);
 
-		const color = {};
-
-		if (text_value !== hover?.color?.text) {
-			color.text = text_value || null;
+		// If color is preset, get preset variable string
+		if (preset !== undefined && typeof preset !== 'string') {
+			preset = createPresetString(preset.slug, 'color');
 		}
 
-		if (background_value !== hover?.color?.background) {
-			color.background = background_value || null;
-		}
-
-		if (Object.entries(color).length > 0) {
-			setHoverAttribute({ color });
-		}
-	}, [hoverTextColor, hoverBackgroundColor]);
+		// Set hover color attribute value
+		setHoverAttribute({
+			color: {
+				[color_key]: preset || null,
+			},
+		});
+	};
 
 	return (
 		<>
-			{/* Inspector */}
+			{/* Inspect Color Panel */}
 			<InspectorControls group="color">
 				<ColorGradientSettingsDropdown
 					__experimentalIsRenderedInSidebar
@@ -128,26 +104,36 @@ export default function ButtonInspectorControls(props) {
 					settings={[
 						{
 							label: __('Text hover'),
-							colorValue: getColorValue(hoverTextColor),
+							colorValue: hoverColorValue(hover?.color?.text),
 							clearable: true,
 							enableAlpha: true,
 							onColorChange: (value) => {
-								setHoverTextColor(getColorPreset(value));
+								onHoverColorChange(value, 'text');
 							},
 							resetAllFilter: () => {
-								setHoverTextColor(undefined);
+								setHoverAttribute({
+									color: {
+										text: null,
+									},
+								});
 							},
 						},
 						{
 							label: __('Background hover'),
-							colorValue: getColorValue(hoverBackgroundColor),
+							colorValue: hoverColorValue(
+								hover?.color?.background
+							),
 							clearable: true,
 							enableAlpha: true,
 							onColorChange: (value) => {
-								setHoverBackgroundColor(getColorPreset(value));
+								onHoverColorChange(value, 'background');
 							},
 							resetAllFilter: () => {
-								setHoverTextColor(undefined);
+								setHoverAttribute({
+									color: {
+										background: null,
+									},
+								});
 							},
 						},
 					]}
@@ -157,22 +143,16 @@ export default function ButtonInspectorControls(props) {
 
 				<TransitionSettingsControl
 					label={__('Hover Transition')}
-					durationValue={hover?.color?.transition?.duration}
+					durationValue={transition?.duration}
 					onDurationChange={(value) => {
-						setHoverAttribute({
-							color: {
-								transition: {
-									duration: value,
-								},
-							},
+						setTransitionAttribute({
+							duration: value,
 						});
 					}}
-					timingValue={hover?.color?.transition?.timing}
+					timingValue={transition?.timing}
 					onTimingChange={(value) => {
-						setHoverAttribute({
-							color: {
-								transition: { timing: value },
-							},
+						setTransitionAttribute({
+							timing: value,
 						});
 					}}
 					withToolPanelItem
@@ -181,6 +161,7 @@ export default function ButtonInspectorControls(props) {
 				/>
 			</InspectorControls>
 
+			{/* Inspector Advanced Panel */}
 			<InspectorAdvancedControls>
 				<SelectControl
 					label={__('HTML Element')}

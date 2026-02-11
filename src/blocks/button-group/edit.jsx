@@ -2,7 +2,6 @@
  * Wordpress dependencies
  */
 import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
-import { BlockEditProps } from '@wordpress/blocks';
 
 /**
  * Editor styles
@@ -12,7 +11,7 @@ import './styles/editor.scss';
 /**
  * Block editor component
  *
- * @param {BlockEditProps<{}>} props
+ * @param {import('@wordpress/blocks').BlockEditProps<{}>} props
  * @returns {React.JSX.Element}
  */
 export default function Edit(props) {

@@ -2,6 +2,8 @@
  * Reusable component styles
  */
 
+@forward "./transition";
+
 /* Hide an element visually while keeping it visible to assistive technology */
 .windmill-blocks-visually-hidden {
 	clip: rect(0 0 0 0);

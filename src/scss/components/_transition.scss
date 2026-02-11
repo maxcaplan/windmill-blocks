@@ -1,0 +1,99 @@
+/*
+ * Transition component styles
+ */
+
+.has-transition-duration-none,
+.has-transition.has-transition-duration-none {
+	transition-property: none;
+	transition-duration: none;
+}
+
+.has-transition {
+	transition-property: var(--wm--block--transition--properties, all);
+	transition-duration: var(--wm--block--transition--duration, 500ms);
+	transition-timing-function: var(--wm--block--transition--timing, ease);
+}
+
+/*
+ * Transition durations
+ */
+
+.has-transition-duration-150 {
+	--wm--block--transition--duration: 150ms;
+}
+
+.has-transition-duration-300 {
+	--wm--block--transition--duration: 300ms;
+}
+
+.has-transition-duration-500 {
+	--wm--block--transition--duration: 500ms;
+}
+
+.has-transition-duration-1000 {
+	--wm--block--transition--duration: 1000ms;
+}
+
+/*
+ * Transition timing functions
+ */
+
+.has-transition-timing-ease {
+	--wm--block--transition--timing: ease;
+}
+
+.has-transition-timing-linear {
+	--wm--block--transition--timing: linear;
+}
+
+.has-transition-timing-ease-in {
+	--wm--block--transition--timing: ease-in;
+}
+
+.has-transition-timing-ease-out {
+	--wm--block--transition--timing: ease-out;
+}
+
+.has-transition-timing-ease-in-out {
+	--wm--block--transition--timing: ease-in-out;
+}
+
+/*
+ * Hover styles
+ */
+
+.has-hover-color {
+	--wm--block--transition--color: color;
+
+	&:hover {
+		color: var(--wm--block--hover--color) !important;
+	}
+}
+
+.has-hover-background {
+	--wm--block--transition--background: background-color;
+
+	&:hover {
+		background: var(--wm--block--hover--background) !important;
+	}
+}
+
+.has-hover-border {
+	--wm--block--transition--border: border;
+}
+
+.has-hover-border-radius {
+	--wm--block--transition--border-radius: border-radius;
+}
+
+.has-hover-padding {
+	--wm--block--transition--padding: padding;
+}
+
+.has-hover-margin {
+	--wm--block--transition--margin: margin;
+}
+
+.has-hover-block-spacing {
+	--wm--block--transition--block-spacing: gap;
+}

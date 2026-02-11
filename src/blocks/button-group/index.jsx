@@ -14,6 +14,7 @@ import metadata from './block.json';
 /**
  * Register block
  */
+/** @ts-ignore */
 registerBlockType(metadata.name, {
 	...metadata,
 	/** Editor component */

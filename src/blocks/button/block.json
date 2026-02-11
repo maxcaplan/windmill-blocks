@@ -26,20 +26,10 @@
 			"default": "button"
 		},
 		":hover": {
-			"type": "object",
-			"default": {}
+			"type": "object"
 		},
-		"hoverTextColor": {
-			"type": "string"
-		},
-		"customHoverTextColor": {
-			"type": "string"
-		},
-		"hoverBackgroundColor": {
-			"type": "string"
-		},
-		"customHoverBackgroundColor": {
-			"type": "string"
+		"transition": {
+			"type": "object"
 		}
 	},
 	"supports": {

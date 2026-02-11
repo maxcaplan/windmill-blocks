@@ -1,3 +1,4 @@
+import { presetStringParts } from '@/util/theme';
 import { useSettings } from '@wordpress/block-editor';
 
 /**
@@ -55,6 +56,8 @@ function useGetColorPresetInternal(is_editor) {
 		) {
 			return color;
 		}
+
+		color = presetStringParts(color)?.slug || color;
 
 		return (
 			color_presets.find(
