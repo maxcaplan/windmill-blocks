@@ -41,5 +41,5 @@ define( 'WINDMILL_BLOCKS_PLUGIN_BASE', plugin_basename( __FILE__ ) );
 /**
  * Require plugin includes.
  */
-require_once WINDMILL_BLOCKS_PLUGIN_DIR . 'incs/setup.php';
+require_once WINDMILL_BLOCKS_PLUGIN_DIR . 'incs/setup/index.php';
 require_once WINDMILL_BLOCKS_PLUGIN_DIR . 'incs/enqueue/index.php';

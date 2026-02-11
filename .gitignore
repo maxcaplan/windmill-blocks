@@ -9,3 +9,6 @@ vendor/
 *.tar.gz
 *.zip
 build/
+
+# Generated css files
+css/global-styles*

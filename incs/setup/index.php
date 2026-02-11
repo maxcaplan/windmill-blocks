@@ -5,7 +5,9 @@
  * @package WindmillBlocks;
  */
 
-namespace WindmillBlocks;
+namespace WindmillBlocks\Setup;
+
+require_once WINDMILL_BLOCKS_PLUGIN_DIR . 'incs/setup/global-styles.php';
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
