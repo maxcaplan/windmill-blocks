@@ -32,14 +32,16 @@ import {
  * @returns {ButtonProps}
  */
 const useButtonBlockPropsInternal = (attributes) => {
-	const { ':hover': hover, transition } = attributes;
+	const { opacity, ':hover': hover, transition } = attributes;
 
 	// Create map of what attributes the block has
 	const has = {
+		opacity: opacity !== undefined,
 		transition: false,
 		hover_color: hover?.color?.text !== undefined,
 		hover_background: hover?.color?.background !== undefined,
 		hover_border_radius: hover?.borderRadius !== undefined,
+		hover_opacity: hover?.opacity !== undefined,
 		transition_duration: transition?.duration !== undefined,
 		transition_timing: transition?.timing !== undefined,
 	};
@@ -96,9 +98,7 @@ const createClassName = (attributes, has_attributes) => {
  * @returns {(import('react').CSSProperties|undefined)}
  */
 const createStyle = (attributes, has_attributes) => {
-	const { ':hover': hover, transition } = attributes;
-
-	console.log(transition?.duration?.toString());
+	const { opacity, ':hover': hover, transition } = attributes;
 
 	/** @type {import('react').CSSProperties} */
 	const styles = {
@@ -122,6 +122,18 @@ const createStyle = (attributes, has_attributes) => {
 		),
 	};
 
+	// Opacity style values
+
+	if (opacity !== undefined) {
+		styles['--wm--block--opacity'] = opacity;
+	}
+
+	if (hover?.opacity !== undefined) {
+		styles['--wm--block--hover--opacity'] = hover.opacity;
+	}
+
+	// Transition style values
+
 	if (
 		!isPresetValue(transition?.duration, duration_options) &&
 		transition?.duration !== undefined
@@ -137,7 +149,7 @@ const createStyle = (attributes, has_attributes) => {
 		styles['--wm--block--transition--timing'] = transition.timing;
 	}
 
-	// Transition properties
+	// Transition properties value
 	if (has_attributes !== undefined) {
 		styles['--wm--block--transition--properties'] =
 			Object.entries(has_attributes)

@@ -29,6 +29,7 @@ import {
 import { TransitionSettingsControl } from '@/components';
 import { useGetColorPreset, useSetObjectAttribute } from '@/hooks';
 import { createPresetString } from '@/util/theme';
+import { RangeControl } from '@wordpress/components';
 
 /**
  * Button block editor inspector controls component
@@ -38,7 +39,7 @@ import { createPresetString } from '@/util/theme';
  */
 export default function ButtonInspectorControls(props) {
 	const { attributes, setAttributes, clientId } = props;
-	const { ':hover': hover, transition } = attributes;
+	const { opacity, ':hover': hover, transition } = attributes;
 
 	/**
 	 * Hooks
@@ -129,9 +130,77 @@ export default function ButtonInspectorControls(props) {
 		});
 	};
 
+	const onHoverOpacityToolItemSelect = () => {
+		if (opacity !== undefined && Math.round(opacity * 100) !== 100) {
+			setHoverAttribute({ opacity: 100 });
+		}
+	};
+
+	/**
+	 * Opacity control value change event handler
+	 *
+	 * @param {number} [value]
+	 */
+	const onHoverOpacityChange = (value) => {
+		const opacity_value =
+			opacity !== undefined ? Math.round(opacity * 100) : 100;
+
+		if (value === undefined || value === opacity_value) {
+			if (hover?.opacity !== undefined) {
+				setHoverAttribute({ opacity: null });
+			}
+
+			return;
+		}
+
+		setHoverAttribute({
+			opacity: Math.round(value + Number.EPSILON) / 100,
+		});
+	};
+
 	return (
 		<>
-			{/* Inspect Color Panel */}
+			{/* Inspector Color Panel */}
+			<InspectorControls group="color">
+				<ToolPanelItem
+					label={__('Opacity')}
+					hasValue={() => opacity !== undefined}
+					onDeselect={() => setAttributes({ opacity: undefined })}
+					resetAllFilter={() => setAttributes({ opacity: undefined })}
+					defaultChecked={false}
+					panelId={clientId}
+				>
+					<RangeControl
+						label={__('Opacity')}
+						initialPosition={
+							opacity === undefined
+								? 100
+								: Math.round(opacity * 100)
+						}
+						min={0}
+						max={100}
+						step={1}
+						value={
+							opacity === undefined
+								? 100
+								: Math.round(opacity * 100)
+						}
+						onChange={(value) =>
+							setAttributes({
+								opacity:
+									value === undefined || value === 100
+										? undefined
+										: Math.round(value + Number.EPSILON) /
+											100,
+							})
+						}
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
+					/>
+				</ToolPanelItem>
+			</InspectorControls>
+
+			{/* Inspector Hover Panel */}
 			<InspectorControls group="styles">
 				<ToolPanel
 					label="Hover"
@@ -206,6 +275,40 @@ export default function ButtonInspectorControls(props) {
 								presets={borderRadiusSizes}
 								values={hover?.borderRadius}
 								onChange={onBorderRadiusChange}
+							/>
+						</ToolPanelItem>
+
+						<ToolPanelItem
+							label={__('Opacity')}
+							hasValue={() => hover?.opacity !== undefined}
+							onSelect={onHoverOpacityToolItemSelect}
+							onDeselect={() =>
+								setHoverAttribute({ opacity: null })
+							}
+							resetAllFilter={() =>
+								setHoverAttribute({ opacity: null })
+							}
+							defaultChecked={false}
+							panelId={clientId}
+						>
+							<RangeControl
+								label={__('Opacity')}
+								initialPosition={
+									opacity !== undefined
+										? Math.round(opacity * 100)
+										: 100
+								}
+								min={0}
+								max={100}
+								step={1}
+								value={
+									hover?.opacity !== undefined
+										? Math.round(hover.opacity * 100)
+										: undefined
+								}
+								onChange={onHoverOpacityChange}
+								__next40pxDefaultSize
+								__nextHasNoMarginBottom
 							/>
 						</ToolPanelItem>
 

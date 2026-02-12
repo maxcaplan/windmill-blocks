@@ -14,3 +14,11 @@
 	white-space: nowrap;
 	width: 1px;
 }
+
+/**
+ * Style Properties
+ */
+
+.has-opacity {
+	opacity: var(--wm--block--opacity, 1);
+}

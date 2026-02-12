@@ -15,6 +15,17 @@
 }
 
 /*
+ * Hover properties
+ */
+.has-hover-opacity {
+	opacity: var(--wm--block--opacity, 1);
+
+	&:hover {
+		opacity: var(--wm--block--hover--opacity, 1) !important;
+	}
+}
+
+/*
  * Transition durations
  */
 

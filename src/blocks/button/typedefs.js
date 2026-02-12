@@ -1,6 +1,7 @@
 /**
  * @typedef {{
  * tagName?: "button" | "a",
+ * opacity?: number,
  * ":hover"?: WindmillBlocksButtonHoverAttribute,
  * transition?: WindmillBlocksButtonTransition
  * }} WindmillBlocksButtonAttributes
@@ -30,6 +31,7 @@
  * @typedef WindmillBlocksButtonHoverAttribute
  * @property {WindmillBlocksButtonHoverColor} [color]
  * @property {WindmillBlocksButtonHoverBorderRadius} [borderRadius]
+ * @property {number} [opacity]
  */
 
 /**

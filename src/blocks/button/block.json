@@ -25,6 +25,9 @@
 			"enum": ["button", "a"],
 			"default": "button"
 		},
+		"opacity": {
+			"type": "number"
+		},
 		":hover": {
 			"type": "object"
 		},
