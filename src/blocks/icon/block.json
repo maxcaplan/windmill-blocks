@@ -1,0 +1,22 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "windmill-blocks/icon",
+	"version": "0.1.0",
+	"title": "Icon",
+	"category": "windmill-blocks",
+	"icon": "heart",
+	"description": "A small image to convey a meaning",
+	"keywords": ["image", "windmill"],
+	"supports": {
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"blockGap": true
+		}
+	},
+	"textdomain": "windmill-blocks",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}
