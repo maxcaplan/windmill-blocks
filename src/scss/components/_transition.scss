@@ -84,6 +84,20 @@
 
 .has-hover-border-radius {
 	--wm--block--transition--border-radius: border-radius;
+	&:hover {
+		border-top-left-radius: var(
+			--wm--block--hover--border-radius--top-left
+		) !important;
+		border-top-right-radius: var(
+			--wm--block--hover--border-radius--top-right
+		) !important;
+		border-bottom-left-radius: var(
+			--wm--block--hover--border-radius--bottom-left
+		) !important;
+		border-bottom-right-radius: var(
+			--wm--block--hover--border-radius--bottom-right
+		) !important;
+	}
 }
 
 .has-hover-padding {

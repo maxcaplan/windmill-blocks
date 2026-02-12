@@ -19,8 +19,17 @@
  */
 
 /**
+ * @typedef WindmillBlocksButtonHoverBorderRadius
+ * @property {string} [topLeft]
+ * @property {string} [topRight]
+ * @property {string} [bottomLeft]
+ * @property {string} [bottomRight]
+ */
+
+/**
  * @typedef WindmillBlocksButtonHoverAttribute
  * @property {WindmillBlocksButtonHoverColor} [color]
+ * @property {WindmillBlocksButtonHoverBorderRadius} [borderRadius]
  */
 
 /**

@@ -68,23 +68,48 @@ export function presetClassName(preset, prefix, suffix) {
 }
 
 /**
- * Create a css style value for a preset string
+ * Create a css property value for a preset string
  *
- * @param {string} [preset_string]
- * @returns
+ * @example
+ * presetStyleValue("var:preset|color|red") // returns: "--wp--preset--color--red"
+ * presetStyleValue("#FF0000") // returns: "#FF0000"
+ * presetStyleValue("var:preset|color|red", { only_custom: true }) // returns: undefined
+ * presetStyleValue("#FF0000", { only_preset: true }) // returns: undefined
+ * presetStyleValue(1000, { custom_suffix: "ms" }) // returns: "1000ms"
+ *
+ * @param {(string|number)} [value]
+ * @param {object} [settings]
+ * @param {string} [settings.custom_prefix] String prepended to custom values
+ * @param {string} [settings.custom_suffix] String appended to custom values
+ * @param {boolean} [settings.only_custom] Only return custom values
+ * @param {boolean} [settings.only_preset] Only return preset values
  */
-export function presetStyleValue(preset_string) {
-	const preset_parts = presetStringParts(preset_string);
-
-	if (
-		preset_parts === undefined ||
-		preset_parts.preset === undefined ||
-		preset_parts.slug === undefined
-	) {
+export function presetStyleValue(value, settings) {
+	if (value === undefined) {
 		return undefined;
 	}
 
-	const { preset, slug } = preset_parts;
+	const only_preset = settings?.only_preset;
+	const only_custom = settings?.only_custom;
+	const custom_prefix = settings?.custom_prefix || '';
+	const custom_suffix = settings?.custom_suffix || '';
 
-	return `var(--wp--preset--${preset}--${slug})`;
+	const parts =
+		typeof value === 'number' ? undefined : presetStringParts(value);
+
+	if (
+		parts === undefined ||
+		parts.preset === undefined ||
+		parts.slug === undefined
+	) {
+		// Value is not a preset
+		return only_preset && !only_custom
+			? undefined
+			: custom_prefix + value + custom_suffix;
+	}
+
+	// Value is a preset
+	return only_custom
+		? undefined
+		: `var(--wp--preset--${parts.preset}--${parts.slug})`;
 }

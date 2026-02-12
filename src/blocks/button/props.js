@@ -9,9 +9,14 @@ import { isEmpty } from 'lodash';
 /**
  * Internal dependencies
  */
-import { presetClassName, presetStringParts } from '@/util/theme';
+import {
+	presetClassName,
+	presetStringParts,
+	presetStyleValue,
+} from '@/util/theme';
 import {
 	duration_options,
+	duration_values,
 	isPresetValue,
 	timing_options,
 } from '@/components/TransitionSettingsControl/presets';
@@ -34,6 +39,7 @@ const useButtonBlockPropsInternal = (attributes) => {
 		transition: false,
 		hover_color: hover?.color?.text !== undefined,
 		hover_background: hover?.color?.background !== undefined,
+		hover_border_radius: hover?.borderRadius !== undefined,
 		transition_duration: transition?.duration !== undefined,
 		transition_timing: transition?.timing !== undefined,
 	};
@@ -92,54 +98,87 @@ const createClassName = (attributes, has_attributes) => {
 const createStyle = (attributes, has_attributes) => {
 	const { ':hover': hover, transition } = attributes;
 
+	console.log(transition?.duration?.toString());
+
 	/** @type {import('react').CSSProperties} */
-	const styles = {};
+	const styles = {
+		...createStyleProperty('hover--color', hover?.color?.text),
+		...createStyleProperty('hover--background', hover?.color?.background),
+		...createStyleProperty(
+			'hover--border-radius--top-left',
+			hover?.borderRadius?.topLeft
+		),
+		...createStyleProperty(
+			'hover--border-radius--top-right',
+			hover?.borderRadius?.topRight
+		),
+		...createStyleProperty(
+			'hover--border-radius--bottom-left',
+			hover?.borderRadius?.bottomLeft
+		),
+		...createStyleProperty(
+			'hover--border-radius--bottom-right',
+			hover?.borderRadius?.bottomRight
+		),
+	};
 
-	// Hover text color
-	if (presetStringParts(hover?.color?.text) === undefined) {
-		styles['--wm--block--hover--color'] = hover?.color?.text;
-	}
-
-	// Hover background color
-	if (presetStringParts(hover?.color?.background) === undefined) {
-		styles['--wm--block--hover--background'] = hover?.color?.background;
-	}
-
-	// Transition duration
-	if (!isPresetValue(transition?.duration, duration_options)) {
+	if (
+		!isPresetValue(transition?.duration, duration_options) &&
+		transition?.duration !== undefined
+	) {
 		styles['--wm--block--transition--duration'] =
-			transition?.duration?.toString() + 'ms';
+			transition.duration.toString() + 'ms';
 	}
 
-	// Transition timing function
-	if (!isPresetValue(transition?.timing, timing_options)) {
-		styles['--wm--block--transition--timing'] = transition?.timing;
+	if (
+		!isPresetValue(transition?.timing, timing_options) &&
+		transition?.timing !== undefined
+	) {
+		styles['--wm--block--transition--timing'] = transition.timing;
 	}
 
 	// Transition properties
 	if (has_attributes !== undefined) {
-		styles['--wm--block--transition--properties'] = Object.entries(
-			has_attributes
-		)
-			.reduce((acc, [key, value]) => {
-				if (value === false) {
+		styles['--wm--block--transition--properties'] =
+			Object.entries(has_attributes)
+				.reduce((acc, [key, value]) => {
+					if (value === false) {
+						return acc;
+					}
+
+					if (key.includes('hover_color')) {
+						acc.push('color');
+					}
+
+					if (key.includes('hover_background')) {
+						acc.push('background');
+					}
+
+					if (key.includes('hover_border_radius')) {
+						acc.push('border-radius');
+					}
+
 					return acc;
-				}
-
-				if (key.includes('hover_color')) {
-					acc.push('color');
-				}
-
-				if (key.includes('hover_background')) {
-					acc.push('background');
-				}
-
-				return acc;
-			}, /** @type {string[]} */ ([]))
-			.join(',');
+				}, /** @type {string[]} */ ([]))
+				.join(',') || undefined;
 	}
 
 	return isEmpty(styles) ? undefined : styles;
+};
+
+/**
+ * @param {string} key_suffix
+ * @param {string} [value]
+ */
+const createStyleProperty = (key_suffix, value) => {
+	if (value === undefined) {
+		return undefined;
+	}
+
+	const style_key = `--wm--block--${key_suffix}`;
+	const style_value = presetStyleValue(value);
+
+	return style_value === undefined ? undefined : { [style_key]: style_value };
 };
 
 /**

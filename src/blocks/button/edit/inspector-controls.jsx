@@ -1,17 +1,26 @@
 import * as TypeDefs from '../typedefs';
 
+import { isEmpty, mapValues } from 'lodash';
+
 /**
  * Wordpress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { SelectControl } from '@wordpress/components';
+import {
+	SelectControl,
+	__experimentalToolsPanel as ToolPanel,
+	__experimentalToolsPanelItem as ToolPanelItem,
+} from '@wordpress/components';
 import {
 	InspectorAdvancedControls,
 	InspectorControls,
+	useSettings,
 	// @ts-ignore
 	__experimentalUseMultipleOriginColorsAndGradients as useMultipleOriginColorsAndGradients,
 	// @ts-ignore
 	__experimentalColorGradientSettingsDropdown as ColorGradientSettingsDropdown,
+	// @ts-ignore
+	__experimentalBorderRadiusControl as BorderRadiusControl,
 } from '@wordpress/block-editor';
 
 /**
@@ -34,6 +43,9 @@ export default function ButtonInspectorControls(props) {
 	/**
 	 * Hooks
 	 */
+
+	/** Theme setting values */
+	const [borderRadiusSizes] = useSettings('border.radiusSizes');
 
 	/** ':hover' attribute setter */
 	const setHoverAttribute = useSetObjectAttribute(props, ':hover');
@@ -94,71 +106,129 @@ export default function ButtonInspectorControls(props) {
 		});
 	};
 
+	/**
+	 * Border radius control value change event handler
+	 *
+	 * @param {(Record<string, (string|undefined|null)>|undefined|null)} value
+	 */
+	const onBorderRadiusChange = (value) => {
+		if (value === undefined || value === null) {
+			if (transition?.timing !== undefined) {
+				setHoverAttribute({
+					borderRadius: null,
+				});
+			}
+
+			return;
+		}
+
+		setHoverAttribute({
+			borderRadius: mapValues(value, (value) =>
+				value === undefined ? null : value
+			),
+		});
+	};
+
 	return (
 		<>
 			{/* Inspect Color Panel */}
-			<InspectorControls group="color">
-				<ColorGradientSettingsDropdown
-					__experimentalIsRenderedInSidebar
+			<InspectorControls group="styles">
+				<ToolPanel
+					label="Hover"
+					resetAll={(filters) =>
+						filters?.forEach((filter) => filter())
+					}
+					hasInnerWrapper
 					panelId={clientId}
-					settings={[
-						{
-							label: __('Text hover'),
-							colorValue: hoverColorValue(hover?.color?.text),
-							clearable: true,
-							enableAlpha: true,
-							onColorChange: (value) => {
-								onHoverColorChange(value, 'text');
-							},
-							resetAllFilter: () => {
-								setHoverAttribute({
-									color: {
-										text: null,
+					className="hover-tool-panel"
+				>
+					<div className="hover-tool-panel__inner-wrapper">
+						<ColorGradientSettingsDropdown
+							__experimentalIsRenderedInSidebar
+							panelId={clientId}
+							settings={[
+								{
+									label: __('Text hover'),
+									colorValue: hoverColorValue(
+										hover?.color?.text
+									),
+									clearable: true,
+									enableAlpha: true,
+									onColorChange: (value) => {
+										onHoverColorChange(value, 'text');
 									},
-								});
-							},
-						},
-						{
-							label: __('Background hover'),
-							colorValue: hoverColorValue(
-								hover?.color?.background
-							),
-							clearable: true,
-							enableAlpha: true,
-							onColorChange: (value) => {
-								onHoverColorChange(value, 'background');
-							},
-							resetAllFilter: () => {
-								setHoverAttribute({
-									color: {
-										background: null,
+									resetAllFilter: () => {
+										setHoverAttribute({
+											color: {
+												text: null,
+											},
+										});
 									},
-								});
-							},
-						},
-					]}
-					disableCustomColors={false}
-					{...colorGradientSettings}
-				/>
+									isShownByDefault: false,
+								},
+								{
+									label: __('Background hover'),
+									colorValue: hoverColorValue(
+										hover?.color?.background
+									),
+									clearable: true,
+									enableAlpha: true,
+									onColorChange: (value) => {
+										onHoverColorChange(value, 'background');
+									},
+									resetAllFilter: () => {
+										setHoverAttribute({
+											color: {
+												background: null,
+											},
+										});
+									},
+									isShownByDefault: false,
+								},
+							]}
+							disableCustomColors={false}
+							{...colorGradientSettings}
+						/>
 
-				<TransitionSettingsControl
-					label={__('Hover Transition')}
-					durationValue={transition?.duration}
-					onDurationChange={(value) => {
-						setTransitionAttribute({
-							duration: value,
-						});
-					}}
-					timingValue={transition?.timing}
-					onTimingChange={(value) => {
-						setTransitionAttribute({
-							timing: value,
-						});
-					}}
-					withToolPanelItem
-					panelId={clientId}
-					defaultChecked={false}
-				/>
+						<ToolPanelItem
+							label={__('Radius')}
+							hasValue={() => !isEmpty(hover?.borderRadius)}
+							onDeselect={() =>
+								setHoverAttribute({ borderRadius: null })
+							}
+							resetAllFilter={() =>
+								setHoverAttribute({ borderRadius: null })
+							}
+							defaultChecked={false}
+							panelId={clientId}
+						>
+							<BorderRadiusControl
+								presets={borderRadiusSizes}
+								values={hover?.borderRadius}
+								onChange={onBorderRadiusChange}
+							/>
+						</ToolPanelItem>
+
+						<TransitionSettingsControl
+							label={__('Transition')}
+							durationValue={transition?.duration}
+							onDurationChange={(value) => {
+								setTransitionAttribute({
+									duration: value,
+								});
+							}}
+							timingValue={transition?.timing}
+							onTimingChange={(value) => {
+								setTransitionAttribute({
+									timing: value,
+								});
+							}}
+							withToolPanelItem
+							panelId={clientId}
+							defaultChecked={false}
+						/>
+					</div>
+				</ToolPanel>
 			</InspectorControls>
 
 			{/* Inspector Advanced Panel */}

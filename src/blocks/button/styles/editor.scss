@@ -8,3 +8,24 @@
 		margin-bottom: 0;
 	}
 }
+
+.hover-tool-panel > .hover-tool-panel__inner-wrapper {
+	box-sizing: border-box;
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0px, 1fr));
+	gap: calc(16px);
+	row-gap: 0 !important;
+	grid-column: 1 / -1;
+
+	&:first-child {
+		margin-top: 0;
+	}
+
+	& > * {
+		margin-top: 16px;
+	}
+
+	& > .block-editor-tools-panel-color-gradient-settings__item {
+		margin: 0;
+	}
+}
