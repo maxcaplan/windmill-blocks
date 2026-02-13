@@ -11,7 +11,7 @@ import { cloneDeep, isEmpty } from 'lodash';
  * @param {object} property Current property being processed in the object
  * @param {string} property.key
  * @param {any} property.value
- * @param {Record<string, any>} object The object `deepFilter()` was called upon
+ * @param {Record<string, any>} object The object `deepFilter` was called upon
  * @returns {Boolean}
  */
 
@@ -90,4 +90,33 @@ function deepFilterInternal(base_object, predicate, object) {
 	});
 
 	return object;
+}
+
+/**
+ * @callback HasPropertyCallback
+ * @param {[string, any]} property Current property of the object
+ * @param {object} object the Object `hasProperties` was called upon
+ * @returns {boolean}
+ */
+
+/**
+ * Test if a given value has all properties for a given list of property keys.
+ * A predicate callback can optionally be given to test the value of each property in the given value.
+ *
+ * @param {object} value Value to test
+ * @param {string[]} property_keys Keys of properties to test `value` for
+ * @param {HasPropertyCallback} [predicate] Callback test called for each property of value for `property_keys`
+ */
+export function hasProperties(value, property_keys, predicate) {
+	return !property_keys.some((key) => {
+		if (!Object.hasOwn(value, key)) {
+			return true;
+		}
+
+		if (predicate !== undefined && !predicate([key, value[key]], value)) {
+			return true;
+		}
+
+		return false;
+	});
 }
