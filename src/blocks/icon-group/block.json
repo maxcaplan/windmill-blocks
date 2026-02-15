@@ -1,0 +1,58 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "windmill-blocks/icon-group",
+	"version": "0.1.0",
+	"title": "Icons",
+	"category": "windmill-blocks",
+	"description": "Group of one or more icons",
+	"keywords": ["image", "windmill"],
+	"example": {
+		"innerBlocks": [
+			{
+				"name": "windmill-blocks/icon",
+				"attributes": {
+					"size": "24px"
+				}
+			},
+			{
+				"name": "windmill-blocks/icon",
+				"attributes": {
+					"size": "24px"
+				}
+			}
+		]
+	},
+	"supports": {
+		"html": false,
+		"layout": {
+			"default": {
+				"type": "flex",
+				"flexWrap": "nowrap",
+				"justifyContent": "left",
+				"orientation": "horizontal",
+				"verticalAlignment": "center"
+			},
+			"allowJustification": true,
+			"allowOrientation": true,
+			"allowSizingOnChildren": true,
+			"allowVerticalAlignment": true,
+			"allowWrap": true,
+			"allowEditing": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"blockGap": true
+		},
+		"align": true,
+		"alignWide": true,
+		"position": {
+			"sticky": true
+		}
+	},
+	"textdomain": "windmill-blocks",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}
