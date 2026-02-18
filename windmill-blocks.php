@@ -37,9 +37,14 @@ define( 'WINDMILL_BLOCKS_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WINDMILL_BLOCKS_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'WINDMILL_BLOCKS_PLUGIN_FILE', __FILE__ );
 define( 'WINDMILL_BLOCKS_PLUGIN_BASE', plugin_basename( __FILE__ ) );
+define( 'WINDMILL_BLOCKS_UPLOADS_DIR', wp_upload_dir()['basedir'] . '/windmill-blocks/' );
+define( 'WINDMILL_BLOCKS_UPLOADS_URL', wp_upload_dir()['baseurl'] . '/windmill-blocks/' );
 
 /**
  * Require plugin includes.
  */
+require_once WINDMILL_BLOCKS_PLUGIN_DIR . 'vendor/autoload.php';
+
 require_once WINDMILL_BLOCKS_PLUGIN_DIR . 'incs/setup/index.php';
 require_once WINDMILL_BLOCKS_PLUGIN_DIR . 'incs/enqueue/index.php';
+require_once WINDMILL_BLOCKS_PLUGIN_DIR . 'incs/api/index.php';

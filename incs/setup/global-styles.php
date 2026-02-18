@@ -15,7 +15,7 @@ use WP_Error;
 function inline_plugin_global_styles() {
 	// Load global stylesheet.
 	$stylesheet_path = get_global_stylesheet();
-	$stylesheet_data = file_get_contents( WINDMILL_BLOCKS_PLUGIN_DIR . $stylesheet_path );
+	$stylesheet_data = file_get_contents( WINDMILL_BLOCKS_UPLOADS_DIR . $stylesheet_path );
 
 	if ( false === $stylesheet_data ) {
 		return;
@@ -37,13 +37,13 @@ add_action( 'wp_head', __NAMESPACE__ . '\inline_plugin_global_styles', 100 );
  * @throws WP_Error - Failed to write generated stylesheet to file.
  */
 function get_global_stylesheet() {
-	$global_styles_dir            = WINDMILL_BLOCKS_PLUGIN_DIR . 'css/';
+	$global_styles_dir            = WINDMILL_BLOCKS_UPLOADS_DIR . 'css/';
 	$global_stylesheet_basename   = 'global-styles';
 	$global_stylesheet_path       = $global_styles_dir . $global_stylesheet_basename . '.css';
 	$global_stylesheet_asset_path = $global_styles_dir . $global_stylesheet_basename . '.asset.php';
 
 	// Create global stylesheet if it doesn't exist.
-	if ( ! is_global_stylesheet_updated() ) {
+	if ( ! is_global_stylesheet_updated( $global_stylesheet_path ) ) {
 		$stylesheet = generate_global_stylesheet();
 
 		// Create style cache dir if it doesn't exist.
@@ -78,13 +78,12 @@ function get_global_stylesheet() {
 /**
  * Check if plugin global stylesheet has been generated since the last update of theme.json
  *
+ * @param string $stylesheet_path - Path to global stylesheet file
  * @return bool
  * @throws WP_Error - Fails to check theme.json file.
  */
-function is_global_stylesheet_updated() {
-	$stylesheet_file = WINDMILL_BLOCKS_PLUGIN_DIR . 'css/global-styles.css';
-
-	if ( ! is_readable( $stylesheet_file ) ) {
+function is_global_stylesheet_updated( $stylesheet_path ) {
+	if ( ! is_readable( $stylesheet_path ) ) {
 		return false;
 	}
 

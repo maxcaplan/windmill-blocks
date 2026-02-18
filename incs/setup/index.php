@@ -54,6 +54,17 @@ function register_blocks() {
 }
 add_action( 'init', __NAMESPACE__ . '\register_blocks' );
 
+function register_nonce() {
+	wp_localize_script(
+		'wp-api',
+		'wpApiSettings',
+		array(
+			'nonce' => wp_create_nonce( 'wp_rest' ),
+		)
+	);
+}
+add_action( 'init', __NAMESPACE__ . '\register_nonce' );
+
 /**
  * Register server-side code for individual blocks.
  */

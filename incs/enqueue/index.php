@@ -99,14 +99,14 @@ function enqueue_editor_global_styles() {
 	}
 
 	$stylesheet_path = get_global_stylesheet();
-	$asset_meta      = get_asset_meta( WINDMILL_BLOCKS_PLUGIN_DIR . 'css/global-styles.asset.php' );
+	$asset_meta      = get_asset_meta( WINDMILL_BLOCKS_UPLOADS_DIR . 'css/global-styles.asset.php' );
 	if ( is_null( $asset_meta ) ) {
 		return;
 	}
 
 	wp_enqueue_style(
 		'windmill-blocks-editor-global-styles',
-		WINDMILL_BLOCKS_PLUGIN_URL . $stylesheet_path,
+		WINDMILL_BLOCKS_UPLOADS_URL . $stylesheet_path,
 		$asset_meta['dependencies'],
 		$asset_meta['version']
 	);
