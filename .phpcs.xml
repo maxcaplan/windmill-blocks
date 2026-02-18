@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="WordPress Coding Standards based custom ruleset for your plugin">
+<ruleset name="Windmill Blocks plugin ruleset">
 	<description>Generally-applicable sniffs for WordPress plugins.</description>
 
 	<!-- What to scan -->
@@ -32,8 +32,6 @@
 	<rule ref="WordPress" />
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
-			<!-- Value: replace the function, class, and variable prefixes used. Separate multiple
-			prefixes with a comma. -->
 			<property name="prefixes" type="array">
 				<element value="windmill-blocks"/>
 				<element value="WindmillBlocks"/>
@@ -43,9 +41,9 @@
 	</rule>
 	<rule ref="WordPress.WP.I18n">
 		<properties>
-			<!-- Value: replace the text domain used. -->
 			<property name="text_domain" type="array">
 				<element value="windmill-blocks" />
+				<element value="WindmillBlocks" />
 			</property>
 		</properties>
 	</rule>

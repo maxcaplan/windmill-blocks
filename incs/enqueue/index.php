@@ -2,7 +2,7 @@
 /**
  * Enqueue plugin scripts and styles
  *
- * @package WindmillBlocks;
+ * @package WindmillBlocks
  */
 
 namespace WindmillBlocks\Enqueue;

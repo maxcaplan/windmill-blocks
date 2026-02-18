@@ -2,7 +2,7 @@
 /**
  * Plugin REST API controller
  *
- * @package WindmillBlocks;
+ * @package WindmillBlocks
  */
 
 namespace WindmillBlocks\Api\Icons;

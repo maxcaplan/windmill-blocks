@@ -2,7 +2,7 @@
 /**
  * Plugin REST API
  *
- * @package WindmillBlocks;
+ * @package WindmillBlocks
  */
 
 namespace WindmillBlocks\Api;

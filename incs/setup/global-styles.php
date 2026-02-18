@@ -2,7 +2,7 @@
 /**
  * Generate plugin global styles
  *
- * @package WindmillBlocks;
+ * @package WindmillBlocks
  */
 
 namespace WindmillBlocks\Setup;

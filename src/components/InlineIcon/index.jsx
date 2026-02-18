@@ -192,6 +192,7 @@ const InlineIconInner = (props) => {
 			return (
 				<svg
 					{...attributesToProps(dom_node.attribs)}
+					id={undefined}
 					className={className}
 					width={width}
 					height={height}

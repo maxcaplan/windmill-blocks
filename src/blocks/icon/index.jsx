@@ -8,7 +8,6 @@ import './styles/style.scss';
  * Internal dependencies
  */
 import Edit from './edit';
-import Save from './save';
 import metadata from './block.json';
 
 /**
@@ -20,6 +19,4 @@ registerBlockType(metadata.name, {
 	icon: blockIcon,
 	/** Editor component */
 	edit: Edit,
-	/** Serialized component */
-	save: Save,
 });

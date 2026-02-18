@@ -20,8 +20,6 @@
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace WindmillBlocks;
-
 /**
  * Prevent direct file access for plugin
  * https://developer.wordpress.org/plugins/plugin-basics/best-practices/#avoiding-direct-file-access
@@ -45,6 +43,7 @@ define( 'WINDMILL_BLOCKS_UPLOADS_URL', wp_upload_dir()['baseurl'] . '/windmill-b
  */
 require_once WINDMILL_BLOCKS_PLUGIN_DIR . 'vendor/autoload.php';
 
+require_once WINDMILL_BLOCKS_PLUGIN_DIR . 'incs/util/index.php';
 require_once WINDMILL_BLOCKS_PLUGIN_DIR . 'incs/setup/index.php';
 require_once WINDMILL_BLOCKS_PLUGIN_DIR . 'incs/enqueue/index.php';
 require_once WINDMILL_BLOCKS_PLUGIN_DIR . 'incs/api/index.php';
