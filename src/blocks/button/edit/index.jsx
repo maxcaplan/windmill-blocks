@@ -1,5 +1,7 @@
 import * as TypeDefs from '../typedefs';
 
+import { useRef, useState } from 'react';
+
 /**
  * Wordpress dependencies
  */
@@ -9,8 +11,9 @@ import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
  * Internal dependencies
  */
 import { useBlockBlacklist } from '@/hooks/use-block-blacklist';
-import ButtonInspectorControls from './inspector-controls';
 import useButtonBlockProps from '../props';
+import ButtonBlockControls from './block-controls';
+import ButtonInspectorControls from './inspector-controls';
 
 const ALLOWED_BLOCKS_BLACKLIST = [
 	'windmill-blocks/button',
@@ -58,6 +61,7 @@ const ALLOWED_BLOCKS_BLACKLIST = [
  * Editor styles
  */
 import '../styles/editor.scss';
+import { useMergeRefs } from '@wordpress/compose';
 
 /**
  * Button block editor component
@@ -67,20 +71,45 @@ import '../styles/editor.scss';
  */
 export default function Edit(props) {
 	const { attributes } = props;
+	const {
+		/** @ts-ignore */
+		layout,
+	} = attributes;
+
+	/**
+	 * State
+	 */
+
+	const [popoverAnchor, setPopoverAnchor] = useState(
+		/** @type {Element|null} */ (null)
+	);
+
+	/**
+	 * Hooks
+	 */
+
+	const blockRef = useRef(/** @type {Element|null} */ (null));
 
 	const allowedBlocks = useBlockBlacklist
 		.byName(ALLOWED_BLOCKS_BLACKLIST)
 		.map((block) => block.name);
 
 	const buttonStyles = useButtonBlockProps(attributes);
-	const blockProps = useBlockProps({ ...buttonStyles });
+	const blockProps = useBlockProps({
+		...buttonStyles,
+		ref: useMergeRefs([setPopoverAnchor, blockRef]),
+	});
 
-	const innerBlockProps = useInnerBlocksProps(blockProps, { allowedBlocks });
+	const innerBlockProps = useInnerBlocksProps(blockProps, {
+		allowedBlocks,
+		orientation: layout?.orientation ?? 'horizontal',
+	});
 
 	return (
 		<>
 			<div {...innerBlockProps} />
 
+			<ButtonBlockControls {...props} popoverAnchor={popoverAnchor} />
 			<ButtonInspectorControls {...props} />
 		</>
 	);

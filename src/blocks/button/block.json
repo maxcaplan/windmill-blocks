@@ -25,6 +25,27 @@
 			"enum": ["button", "a"],
 			"default": "button"
 		},
+		"url": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "a",
+			"attribute": "href",
+			"role": "content"
+		},
+		"linkTarget": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "a",
+			"attribute": "target",
+			"role": "content"
+		},
+		"rel": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "a",
+			"attribute": "rel",
+			"role": "content"
+		},
 		"opacity": {
 			"type": "number"
 		},
@@ -95,8 +116,10 @@
 			"padding": true,
 			"blockGap": true
 		},
-		"reusable": false,
-		"anchor": true
+		"anchor": true,
+		"interactivity": {
+			"clientNavigation": true
+		}
 	},
 	"textdomain": "windmill-blocks",
 	"editorScript": "file:./index.js",

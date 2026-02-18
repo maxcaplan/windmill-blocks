@@ -17,12 +17,18 @@ importers:
       '@wordpress/blocks':
         specifier: ^15.12.0
         version: 15.12.0(react@19.2.4)
+      '@wordpress/compose':
+        specifier: ^7.39.0
+        version: 7.39.0(react@19.2.4)
       '@wordpress/data':
         specifier: ^10.39.0
         version: 10.39.0(react@19.2.4)
       '@wordpress/editor':
         specifier: ^14.39.0
         version: 14.39.0(@emotion/is-prop-valid@1.4.0)(@types/react-dom@18.3.7(@types/react@18.3.27))(@types/react@18.3.27)(react-dom@18.3.1(react@19.2.4))(react@19.2.4)(stylelint@16.26.1(typescript@5.9.3))
+      '@wordpress/element':
+        specifier: ^6.39.0
+        version: 6.39.0
       '@wordpress/hooks':
         specifier: ^4.39.0
         version: 4.39.0
@@ -32,6 +38,12 @@ importers:
       '@wordpress/icons':
         specifier: ^11.6.0
         version: 11.6.0(react@19.2.4)
+      '@wordpress/keycodes':
+        specifier: ^4.39.0
+        version: 4.39.0
+      '@wordpress/url':
+        specifier: ^4.39.0
+        version: 4.39.0
       clsx:
         specifier: ^2.1.1
         version: 2.1.1

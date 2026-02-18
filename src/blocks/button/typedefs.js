@@ -3,7 +3,10 @@
  * tagName?: "button" | "a",
  * opacity?: number,
  * ":hover"?: WindmillBlocksButtonHoverAttribute,
- * transition?: WindmillBlocksButtonTransition
+ * transition?: WindmillBlocksButtonTransition,
+ * url?: string,
+ * linkTarget?: string,
+ * rel?: string
  * }} WindmillBlocksButtonAttributes
  */
 

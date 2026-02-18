@@ -9,11 +9,19 @@ import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
 import useButtonBlockProps from './props';
 
 /**
+ * @typedef {{ tagName?: "a" | "button" } & React.AnchorHTMLAttributes<HTMLAnchorElement> & React.ButtonHTMLAttributes<HTMLButtonElement>} BlockTagProps
+ */
+
+/**
  *
- * @param {Record<string, unknown> & { tagName?: "a" | "button", role: string }} props
+ * @param {Record<string, unknown> & BlockTagProps} props
  */
 const BlockTag = ({ tagName, ...blockProps }) => {
-	return tagName === 'a' ? <a {...blockProps} /> : <button {...blockProps} />;
+	return tagName === 'a' ? (
+		<a role="button" {...blockProps} />
+	) : (
+		<button role="button" {...blockProps} />
+	);
 };
 
 /**
@@ -24,12 +32,22 @@ const BlockTag = ({ tagName, ...blockProps }) => {
  */
 export default function Save(props) {
 	const { attributes } = props;
-	const { tagName } = attributes;
+	const { tagName, url, linkTarget, rel } = attributes;
+
+	const isButtonTag = tagName !== 'a';
 
 	const buttonStyles = useButtonBlockProps.save(attributes);
 
 	const blockProps = useBlockProps.save({ ...buttonStyles });
 	const innerBlockProps = useInnerBlocksProps.save(blockProps);
 
-	return <BlockTag tagName={tagName} role="button" {...innerBlockProps} />;
+	return (
+		<BlockTag
+			tagName={tagName}
+			href={isButtonTag ? undefined : url}
+			target={isButtonTag ? undefined : linkTarget}
+			rel={isButtonTag ? undefined : rel}
+			{...innerBlockProps}
+		/>
+	);
 }

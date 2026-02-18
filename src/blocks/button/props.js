@@ -170,6 +170,10 @@ const createStyle = (attributes, has_attributes) => {
 						acc.push('border-radius');
 					}
 
+					if (key.includes('hover_opacity')) {
+						acc.push('opacity');
+					}
+
 					return acc;
 				}, /** @type {string[]} */ ([]))
 				.join(',') || undefined;
