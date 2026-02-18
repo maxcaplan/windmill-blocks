@@ -1,7 +1,7 @@
 /**
  * Wordpress dependencies
  */
-import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
 
 /**
  * Serialized block component
@@ -10,9 +10,8 @@ import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
  * @returns {React.JSX.Element}
  */
 export default function Save(props) {
-	return (
-		<div {...useBlockProps.save()}>
-			<InnerBlocks.Content />
-		</div>
-	);
+	const blockProps = useBlockProps.save();
+	const innerBlockProps = useInnerBlocksProps.save(blockProps);
+
+	return <div {...innerBlockProps} />;
 }

@@ -1,7 +1,7 @@
 /**
  * Wordpress dependencies
  */
-import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
 
 /**
  * Editor styles
@@ -16,18 +16,18 @@ import './styles/editor.scss';
  */
 export default function Edit(props) {
 	const { attributes } = props;
-	const { layout } = attributes;
+	const {
+		/** @ts-ignore */
+		layout,
+	} = attributes;
 
-	return (
-		<>
-			<div {...useBlockProps()}>
-				<InnerBlocks
-					allowedBlocks={['windmill-blocks/button']}
-					template={[['windmill-blocks/button']]}
-					templateInsertUpdatesSelection={true}
-					orientation={layout?.orientation ?? 'horizontal'}
-				/>
-			</div>
-		</>
-	);
+	const blockProps = useBlockProps();
+	const innerBlockProps = useInnerBlocksProps(blockProps, {
+		allowedBlocks: ['windmill-blocks/button'],
+		template: [['windmill-blocks/button']],
+		templateInsertUpdatesSelection: true,
+		orientation: layout?.orientation ?? 'horizontal',
+	});
+
+	return <div {...innerBlockProps} />;
 }

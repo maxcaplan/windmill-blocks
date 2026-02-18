@@ -17,6 +17,10 @@
 		gap: 8px;
 	}
 
+	#{&}__control-wrapper {
+		flex: 1;
+	}
+
 	#{&}__header {
 		grid-column-start: 1;
 		grid-column-end: -1;

@@ -1,4 +1,5 @@
 import { registerBlockType } from '@wordpress/blocks';
+import { starFilled as blockIcon } from '@wordpress/icons';
 
 /** Frontend styles */
 import './styles/style.scss';
@@ -16,6 +17,7 @@ import metadata from './block.json';
 /** @ts-ignore */
 registerBlockType(metadata.name, {
 	...metadata,
+	icon: blockIcon,
 	/** Editor component */
 	edit: Edit,
 	/** Serialized component */

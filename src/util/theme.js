@@ -71,7 +71,7 @@ export function presetClassName(preset, prefix, suffix) {
  * Create a css property value for a preset string
  *
  * @example
- * presetStyleValue("var:preset|color|red") // returns: "--wp--preset--color--red"
+ * presetStyleValue("var:preset|color|red") // returns: "var(--wp--preset--color--red)"
  * presetStyleValue("#FF0000") // returns: "#FF0000"
  * presetStyleValue("var:preset|color|red", { only_custom: true }) // returns: undefined
  * presetStyleValue("#FF0000", { only_preset: true }) // returns: undefined

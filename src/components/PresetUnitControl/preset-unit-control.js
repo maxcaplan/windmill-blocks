@@ -135,11 +135,12 @@ const WithWrapper = ({ className, withWrapper, children }) => {
 /**
  * @param {object} props
  * @param {string} [props.label]
+ * @param {"top"|"side"} [props.labelPosition]
  * @param {import('@wordpress/components').IconType} [props.icon]
  * @param {boolean} [props.hideLabelFromVision]
  * @returns
  */
-const ControlLabel = ({ label, hideLabelFromVision, icon }) => {
+const ControlLabel = ({ label, labelPosition, hideLabelFromVision, icon }) => {
 	if (label === undefined) {
 		return;
 	}
@@ -148,7 +149,8 @@ const ControlLabel = ({ label, hideLabelFromVision, icon }) => {
 		<h3
 			className={clsx('preset-unit-control__label', {
 				'windmill-blocks-visually-hidden':
-					hideLabelFromVision === true || icon !== undefined,
+					hideLabelFromVision === true ||
+					(icon !== undefined && labelPosition === 'side'),
 			})}
 		>
 			{label}
@@ -232,8 +234,6 @@ export default function PresetUnitControl(props) {
 	const onCustomToggleClicked = () => {
 		// Update value to a preset value when toggling custom value off
 		if (hasCustomValue) {
-			console.log(value);
-			console.log(presets);
 			onChange?.(presets?.find((preset) => preset.value === value));
 		}
 
