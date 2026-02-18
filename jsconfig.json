@@ -41,6 +41,7 @@
 			"@/*": ["./src/*"]
 		}
 	},
+	"files": ["globals.d.ts"],
 	"include": ["${configDir}/src"],
 	"exclude": [
 		"**/*.android.js",
