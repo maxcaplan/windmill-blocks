@@ -9,14 +9,9 @@ import { isEmpty } from 'lodash';
 /**
  * Internal dependencies
  */
-import {
-	presetClassName,
-	presetStringParts,
-	presetStyleValue,
-} from '@/util/theme';
+import { presetClassName, presetStyleValue } from '@/util/theme';
 import {
 	duration_options,
-	duration_values,
 	isPresetValue,
 	timing_options,
 } from '@/components/TransitionSettingsControl/presets';
@@ -28,10 +23,13 @@ import {
  */
 
 /**
+ * Construct button block props from block attributes
+ *
  * @param {TypeDefs.WindmillBlocksButtonAttributes} attributes
+ * @param {string} [className]
  * @returns {ButtonProps}
  */
-const useButtonBlockPropsInternal = (attributes) => {
+export default function useButtonBlockProps(attributes, className) {
 	const { opacity, ':hover': hover, transition } = attributes;
 
 	// Create map of what attributes the block has
@@ -51,19 +49,20 @@ const useButtonBlockPropsInternal = (attributes) => {
 
 	// Create button props
 	return {
-		className: createClassName(attributes, has),
+		className: createClassName(attributes, has, className),
 		style: createStyle(attributes, has),
 	};
-};
+}
 
 /**
  * Create className string from block attributes
  *
  * @param {TypeDefs.WindmillBlocksButtonAttributes} attributes
  * @param {Record<string, boolean>} [has_attributes]
+ * @param {string} [className]
  * @returns {(string|undefined)}
  */
-const createClassName = (attributes, has_attributes) => {
+const createClassName = (attributes, has_attributes, className) => {
 	const { ':hover': hover, transition } = attributes;
 
 	// Create array of 'has' class strings from has map
@@ -87,7 +86,7 @@ const createClassName = (attributes, has_attributes) => {
 	]);
 
 	// Create className string
-	return clsx(has_classes) || undefined;
+	return clsx(has_classes, className) || undefined;
 };
 
 /**
@@ -196,23 +195,3 @@ const createStyleProperty = (key_suffix, value) => {
 
 	return style_value === undefined ? undefined : { [style_key]: style_value };
 };
-
-/**
- * Construct button block props from block attributes
- *
- * @param {TypeDefs.WindmillBlocksButtonAttributes} attributes
- */
-const useButtonBlockProps = (attributes) => {
-	return useButtonBlockPropsInternal(attributes);
-};
-
-/**
- * Construct button block props from block attributes
- *
- * @param {TypeDefs.WindmillBlocksButtonAttributes} attributes
- */
-useButtonBlockProps.save = (attributes) => {
-	return useButtonBlockPropsInternal(attributes);
-};
-
-export default useButtonBlockProps;

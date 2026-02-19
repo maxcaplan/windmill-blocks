@@ -1,23 +1,31 @@
 import * as TypeDefs from '../typedefs';
 
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 
 /**
  * Wordpress dependencies
  */
 import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
+import { useMergeRefs } from '@wordpress/compose';
 
 /**
  * Internal dependencies
  */
-import { useBlockBlacklist } from '@/hooks/use-block-blacklist';
 import useButtonBlockProps from '../props';
 import ButtonBlockControls from './block-controls';
 import ButtonInspectorControls from './inspector-controls';
+import { useBlockBlackList } from '@/hooks';
+
+/**
+ * Editor styles
+ */
+import '../styles/editor.scss';
 
 const ALLOWED_BLOCKS_BLACKLIST = [
 	'windmill-blocks/button',
 	'windmill-blocks/button-group',
+	'windmill-blocks/navbar-mobile-menu-toggle',
+	'windmill-blocks/navbar-mobile-menu-toggle-button',
 	'core/button',
 	'core/buttons',
 	'core/accordion',
@@ -58,23 +66,20 @@ const ALLOWED_BLOCKS_BLACKLIST = [
 ];
 
 /**
- * Editor styles
- */
-import '../styles/editor.scss';
-import { useMergeRefs } from '@wordpress/compose';
-
-/**
  * Button block editor component
  *
- * @param {TypeDefs.WindmillBlocksButtonEditProps} props
+ * @param {TypeDefs.WindmillBlocksButtonEditProps & { name: string }} props
  * @returns {React.JSX.Element}
  */
 export default function Edit(props) {
-	const { attributes } = props;
+	const { attributes, name } = props;
 	const {
 		/** @ts-ignore */
 		layout,
 	} = attributes;
+
+	const isNavbarMobileMenuToggleButton =
+		name === 'windmill-blocks/navbar-mobile-menu-toggle-button';
 
 	/**
 	 * State
@@ -90,11 +95,17 @@ export default function Edit(props) {
 
 	const blockRef = useRef(/** @type {Element|null} */ (null));
 
-	const allowedBlocks = useBlockBlacklist
+	const allowedBlocks = useBlockBlackList
 		.byName(ALLOWED_BLOCKS_BLACKLIST)
 		.map((block) => block.name);
 
-	const buttonStyles = useButtonBlockProps(attributes);
+	const buttonStyles = useButtonBlockProps(
+		attributes,
+		isNavbarMobileMenuToggleButton
+			? 'wp-block-windmill-blocks-button'
+			: undefined
+	);
+
 	const blockProps = useBlockProps({
 		...buttonStyles,
 		ref: useMergeRefs([setPopoverAnchor, blockRef]),

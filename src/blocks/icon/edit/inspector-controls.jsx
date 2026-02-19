@@ -70,41 +70,6 @@ export default function IconInspectorControls(props) {
 	}));
 
 	/**
-	 * Event handlers
-	 */
-
-	/**
-	 * Dimension control value change event handler
-	 *
-	 * @param {string|number|SizePresetObject} [value]
-	 */
-	const onSizeChange = (value) => {
-		let attribute_value = undefined;
-
-		switch (typeof value) {
-			case 'string':
-				attribute_value = value.trim();
-				break;
-			case 'number':
-				attribute_value = value.toString().trim();
-				break;
-			case 'undefined':
-				break;
-			default:
-				attribute_value = `var:preset|spacing|${value.slug}`;
-				break;
-		}
-
-		attribute_value = attribute_value === '' ? undefined : attribute_value;
-
-		if (size !== attribute_value) {
-			setAttributes({
-				size: attribute_value,
-			});
-		}
-	};
-
-	/**
 	 * Upload icon control value change event handler
 	 *
 	 * @param {TypeDefs.IconData} value
@@ -144,8 +109,16 @@ export default function IconInspectorControls(props) {
 							label="size"
 							icon={sizeIcon}
 							value={size}
-							onChange={onSizeChange}
+							onChange={(value) =>
+								setAttributes({
+									size:
+										value === undefined
+											? undefined
+											: value.toString(),
+								})
+							}
 							presets={size_presets}
+							presetCategory="spacing"
 						/>
 					</ToolsPanelItem>
 

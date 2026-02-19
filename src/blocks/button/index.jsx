@@ -1,22 +1,34 @@
 import { registerBlockType } from '@wordpress/blocks';
 
-/** Frontend styles */
-import './styles/style.scss';
-
 /**
  * Internal dependencies
  */
 import Edit from './edit';
 import Save from './save';
 import metadata from './block.json';
-import { __ } from '@wordpress/i18n';
+
+/** Frontend styles */
+import './styles/style.scss';
 
 /**
- * Register block
+ * Register blocks
  */
+
 // @ts-ignore
 registerBlockType(metadata.name, {
 	...metadata,
+	/** Editor component */
+	edit: Edit,
+	/** Serialized component */
+	save: Save,
+});
+
+// @ts-ignore
+registerBlockType('windmill-blocks/navbar-mobile-menu-toggle-button', {
+	...metadata,
+	name: 'windmill-blocks/navbar-mobile-menu-toggle-button',
+	title: 'Navbar Mobile Menu Toggle',
+	parent: ['windmill-blocks/navbar-mobile-menu-toggle'],
 	/** Editor component */
 	edit: Edit,
 	/** Serialized component */
