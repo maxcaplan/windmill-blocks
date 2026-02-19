@@ -33,7 +33,7 @@
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<property name="prefixes" type="array">
-				<element value="windmill-blocks"/>
+				<element value="windmill_blocks"/>
 				<element value="WindmillBlocks"/>
 				<element value="WINDMILL_BLOCKS"/>
 			</property>

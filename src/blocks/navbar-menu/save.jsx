@@ -16,5 +16,8 @@ import {
  * @returns {React.JSX.Element}
  */
 export default function Save(props) {
-	return <InnerBlocks.Content />;
+	const blockProps = useBlockProps.save();
+	const innerBlockProps = useInnerBlocksProps.save(blockProps);
+
+	return <div {...innerBlockProps} />;
 }

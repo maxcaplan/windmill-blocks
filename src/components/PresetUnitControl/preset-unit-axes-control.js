@@ -23,7 +23,7 @@ import PresetUnitControl from './preset-unit-control';
  * @typedef PresetAxis
  * @property {string} label
  * @property {string} [value]
- * @property {(value?: string|TypeDefs.PresetObject) => void} [onChange]
+ * @property {(value?: string|number) => void} [onChange]
  * @property {boolean} [hideLabelFromVision]
  * @property {import("@wordpress/components").IconType} [icon]
  */
@@ -66,8 +66,6 @@ function PresetUnitAxisControl(props) {
 }
 
 /**
- * @template {TypeDefs.PresetObject} T
- *
  * @param {PresetUnitAxesControlProps} props
  * @returns {React.JSX.Element}
  */
@@ -150,7 +148,7 @@ export default function PresetUnitAxesControl(props) {
 	/**
 	 * Linked preset control value changed
 	 *
-	 * @param {string|TypeDefs.PresetObject} [axis_value]
+	 * @param {string|number} [axis_value]
 	 */
 	const onLinkedValueChange = (axis_value) => {
 		if (!hasAxis(axes)) {

@@ -60,25 +60,6 @@ function register_dynamic_blocks() {
 }
 add_action( 'init', __NAMESPACE__ . '\register_dynamic_blocks' );
 
-
-// /**
-// * Register plugin blocks
-// */
-// function register_blocks() {
-// Get all block.json files.
-// $all_blocks_meta = glob( WINDMILL_BLOCKS_PLUGIN_DIR . 'build/blocks/*/block.json' );
-
-// if ( false === $all_blocks_meta ) {
-// return;
-// }
-
-// Register blocks with metadata.
-// foreach ( $all_blocks_meta as $block_meta ) {
-// register_block_type( $block_meta );
-// }
-// }
-// add_action( 'init', __NAMESPACE__ . '\register_blocks' );
-
 /**
  * Register nonce value for API validation
  */
@@ -92,3 +73,21 @@ function register_nonce() {
 	);
 }
 add_action( 'init', __NAMESPACE__ . '\register_nonce' );
+
+/**
+ * Add generated block styles to page head
+ */
+function inline_generated_block_styles() {
+	global $windmill_blocks_block_styles;
+
+	if ( ! is_array( $windmill_blocks_block_styles ) ) {
+		return;
+	}
+
+	if ( count( $windmill_blocks_block_styles ) <= 0 ) {
+		return;
+	}
+
+	echo '<style id="windmill-blocks-inline-block-styles">' . "\r\n" . implode( "\r\n", $windmill_blocks_block_styles ) . "\r\n" . '</style>';
+}
+add_action( 'wp_head', __NAMESPACE__ . '\inline_generated_block_styles' );

@@ -1,3 +1,7 @@
 /**
  * Editor block styles.
  */
+
+:root :where(.is-layout-flow) > .wp-block-windmill-blocks-navbar {
+	margin-block: 0;
+}

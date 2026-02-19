@@ -1,18 +1,14 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "windmill-blocks/navbar",
+	"name": "windmill-blocks/navbar-breakpoint",
+	"parent": ["windmill-blocks/navbar"],
 	"version": "0.1.0",
-	"title": "Navbar",
+	"title": "Navbar Menu",
 	"category": "windmill-blocks",
 	"icon": "navigation",
 	"description": "Responsive top level navigation",
 	"keywords": ["link", "navigation", "menu", "windmill"],
-	"attributes": {
-		"desktopBreakpoint": {
-			"type": "string"
-		}
-	},
 	"supports": {
 		"html": false,
 		"typography": {
@@ -56,13 +52,10 @@
 		"alignWide": true,
 		"position": {
 			"sticky": true
-		},
-		"anchor": true
+		}
 	},
 	"textdomain": "windmill-blocks",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
-	"render": "file:./render.php",
-	"viewScript": "file:./view.js",
 	"style": "file:./style-index.css"
 }

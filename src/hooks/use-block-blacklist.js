@@ -83,4 +83,4 @@ useBlockBlacklist.byName = (blacklist) => {
  * Private functions
  */
 
-export { useBlockBlacklist };
+export default useBlockBlacklist;

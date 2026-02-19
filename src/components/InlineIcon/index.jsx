@@ -17,7 +17,7 @@ import {
  * Internal dependencies
  */
 import { isIconData } from './util';
-import useGetSvgContents from '@/hooks/use-get-svg-contents';
+import { useGetSvgContents } from '@/hooks';
 
 /**
  * Wordpress dependencies

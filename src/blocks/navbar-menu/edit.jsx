@@ -1,8 +1,5 @@
 import * as TypeDefs from './typedefs';
 
-import { useEffect, useMemo, useState } from 'react';
-// import { convert } from 'units-css';
-
 /**
  * Wordpress dependencies
  */
@@ -16,19 +13,18 @@ import {
 	useInnerBlocksProps,
 } from '@wordpress/block-editor';
 import { resizeCornerNE as breakpointIcon } from '@wordpress/icons';
-import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { PresetUnitControl } from '@/components/PresetUnitControl';
-import { useBlockBlackList, useThemeSettingsObjects } from '@/hooks';
+import { useBlockBlackList } from '@/hooks';
 
 /**
  * Editor styles
  */
 import './styles/editor.scss';
-import { presetStringParts } from '@/util/theme';
+import { __ } from '@wordpress/i18n';
+import { PresetUnitControl } from '@/components/PresetUnitControl';
 
 const ALLOWED_BLOCKS_BLACKLIST = [
 	'windmill-blocks/navigation',
@@ -79,43 +75,6 @@ export default function Edit(props) {
 	/**
 	 * Hooks
 	 */
-	const spacingSizes = useThemeSettingsObjects('spacing.spacingSizes', {
-		name: 'string',
-		slug: 'string',
-		size: 'string',
-	});
-
-	const breakpointWidth = useMemo(() => {
-		const breakpoint_value =
-			desktopBreakpoint === undefined ? '600px' : desktopBreakpoint;
-		const preset = presetStringParts(breakpoint_value);
-		const preset_value =
-			preset?.slug === undefined
-				? undefined
-				: spacingSizes.find((size) => size.slug === preset.slug)?.size;
-
-		return preset_value ?? breakpoint_value;
-	}, [desktopBreakpoint, spacingSizes]);
-
-	const mediaQueryCss = useMemo(() => {
-		return `@media only screen and (max-width: ${breakpointWidth}) {
-	.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-desktop  {
-		display: none !important;
-	}
-
-	.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-mobile {
-		display: flex !important;
-	}
-}
-
-.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-desktop {
-	display: flex;
-}
-
-.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-mobile {
-	display: none;
-}`;
-	}, [breakpointWidth]);
 
 	const allowedBlocks = useBlockBlackList
 		.byName(ALLOWED_BLOCKS_BLACKLIST)
@@ -123,20 +82,13 @@ export default function Edit(props) {
 
 	const blockProps = useBlockProps();
 	const innerBlockProps = useInnerBlocksProps(blockProps, {
-		allowedBlocks,
-		template: [
-			['windmill-blocks/navbar-desktop'],
-			['windmill-blocks/navbar-mobile'],
-		],
+		allowedBlocks: allowedBlocks,
 		orientation: layout?.orientation ?? 'horizontal',
 	});
 
 	return (
 		<>
-			<style className="windmill-blocks-navbar-breakpoint-styles">
-				{mediaQueryCss}
-			</style>
-			<nav {...innerBlockProps} />
+			<div {...innerBlockProps} />
 
 			<InspectorControls group="settings">
 				<ToolsPanel

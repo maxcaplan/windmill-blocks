@@ -59,6 +59,9 @@ importers:
       react:
         specifier: ^19.2.4
         version: 19.2.4
+      units-css:
+        specifier: ^0.4.0
+        version: 0.4.0
     devDependencies:
       '@jest/globals':
         specifier: ^30.2.0
@@ -5048,6 +5051,10 @@ packages:
   isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
+  isnumeric@0.2.0:
+    resolution: {integrity: sha512-uSJoAwnN1eCKDFKi8hL3UCYJSkQv+NwhKzhevUPIn/QZ8ILO21f+wQnlZHU0eh1rsLO1gI4w/HQdeOSTKwlqMg==}
+    engines: {node: '>= 0.8.x'}
+
   isobject@3.0.1:
     resolution: {integrity: sha512-WhB9zCku7EGTj/HQQRz5aUQEUeoQZH2bWcltRErOpymJ4boYE6wL9Tbr23krRPSZ+C5zqNSrSw+Cc7sZZ4b7vg==}
     engines: {node: '>=0.10.0'}
@@ -7470,6 +7477,9 @@ packages:
     resolution: {integrity: sha512-hpbDzxUY9BFwX+UeBnxv3Sh1q7HFxj48DTmXchNgRa46lO8uj3/1iEn3MiNUYTg1g9ctIqXCCERn8gYZhHC5lQ==}
     engines: {node: '>=4'}
 
+  units-css@0.4.0:
+    resolution: {integrity: sha512-WijzYC+chwzg2D6HmNGUSzPAgFRJfuxVyG9oiY28Ei5E+g6fHoPkhXUr5GV+5hE/RTHZNd9SuX2KLioYHdttoA==}
+
   unpipe@1.0.0:
     resolution: {integrity: sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==}
     engines: {node: '>= 0.8'}
@@ -7561,6 +7571,9 @@ packages:
   vary@1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
+
+  viewport-dimensions@0.2.0:
+    resolution: {integrity: sha512-94JqlKxEP4m7WO+N3rm4tFRGXZmXXwSPQCoV+EPxDnn8YAGiLU3T+Ha1imLreAjXsHl0K+ELnIqv64i1XZHLFQ==}
 
   w3c-xmlserializer@5.0.0:
     resolution: {integrity: sha512-o8qghlI8NZHU1lLPrpi2+Uq7abh4GGPpYANlalzWxyWteJOCsr/P+oPBA49TOLu5FTZO4d3F9MnWJfiMo4BkmA==}
@@ -14497,6 +14510,8 @@ snapshots:
 
   isexe@2.0.0: {}
 
+  isnumeric@0.2.0: {}
+
   isobject@3.0.1: {}
 
   isomorphic.js@0.2.5: {}
@@ -17475,6 +17490,11 @@ snapshots:
 
   unicode-property-aliases-ecmascript@2.2.0: {}
 
+  units-css@0.4.0:
+    dependencies:
+      isnumeric: 0.2.0
+      viewport-dimensions: 0.2.0
+
   unpipe@1.0.0: {}
 
   unrs-resolver@1.11.1:
@@ -17571,6 +17591,8 @@ snapshots:
   validate-npm-package-name@5.0.1: {}
 
   vary@1.1.2: {}
+
+  viewport-dimensions@0.2.0: {}
 
   w3c-xmlserializer@5.0.0:
     dependencies:

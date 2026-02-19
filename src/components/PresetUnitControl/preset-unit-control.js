@@ -18,11 +18,7 @@ import { settings as customToggleIcon } from '@wordpress/icons';
 /**
  * Internal dependencies
  */
-import {
-	DEFAULT_PRESET_VALUE,
-	isOptionValue,
-	optionValue,
-} from '@/util/options';
+import { DEFAULT_PRESET_VALUE } from '@/util/options';
 import { useThemeSettings } from '@/hooks/use-theme-settings';
 import { presetStringParts } from '@/util/theme';
 
@@ -99,8 +95,12 @@ const useUnitControlValue = (value, presets) =>
  */
 const useHasCustomValue = (value, preset_options) => {
 	const initial_value = () => {
-		if (value === undefined || preset_options === undefined) {
+		if (value === undefined) {
 			return false;
+		}
+
+		if (preset_options === undefined) {
+			return true;
 		}
 
 		const preset_slug = presetStringParts(value)?.slug;
@@ -164,10 +164,11 @@ const ControlLabel = ({ label, labelPosition, hideLabelFromVision, icon }) => {
  * @property {boolean} [hideLabelFromVision]
  * @property {"top"|"side"} [labelPosition]
  * @property {string} [value]
- * @property {(value?: string|TypeDefs.PresetObject) => void} [onChange]
+ * @property {(value?: string | number) => void} [onChange]
  * @property {import("@wordpress/components").IconType} [icon]
  * @property {(number)} [iconSize]
  * @property {TypeDefs.PresetObject[]} [presets]
+ * @property {string} [presetCategory]
  * @property {TypeDefs.UnitOption[]} [units]
  * @property {boolean} [withWrapper]
  * @property {boolean} [withInnerWrapper]
@@ -188,6 +189,7 @@ export default function PresetUnitControl(props) {
 		icon,
 		iconSize,
 		presets,
+		presetCategory,
 		units,
 		withWrapper,
 		withInnerWrapper,
@@ -227,14 +229,22 @@ export default function PresetUnitControl(props) {
 			return;
 		}
 
-		onChange?.(presets.find((preset) => preset.slug === value));
+		const preset_value = presets.find((preset) => preset.slug === value);
+		value =
+			preset_value === undefined
+				? value
+				: `var:preset|${presetCategory}|${preset_value.slug}`;
+
+		onChange?.(value);
 	};
 
 	/** Custom toggle button clicked event handler */
 	const onCustomToggleClicked = () => {
 		// Update value to a preset value when toggling custom value off
 		if (hasCustomValue) {
-			onChange?.(presets?.find((preset) => preset.value === value));
+			onChange?.(
+				presets?.find((preset) => preset.value === value)?.value
+			);
 		}
 
 		setHasCustomValue(!hasCustomValue);
