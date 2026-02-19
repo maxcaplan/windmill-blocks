@@ -3,16 +3,7 @@ import * as TypeDefs from './typedefs';
 /**
  * Wordpress dependencies
  */
-import {
-	__experimentalToolsPanel as ToolsPanel,
-	__experimentalToolsPanelItem as ToolsPanelItem,
-} from '@wordpress/components';
-import {
-	InspectorControls,
-	useBlockProps,
-	useInnerBlocksProps,
-} from '@wordpress/block-editor';
-import { resizeCornerNE as breakpointIcon } from '@wordpress/icons';
+import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
 
 /**
  * Internal dependencies
@@ -23,8 +14,6 @@ import { useBlockBlackList } from '@/hooks';
  * Editor styles
  */
 import './styles/editor.scss';
-import { __ } from '@wordpress/i18n';
-import { PresetUnitControl } from '@/components/PresetUnitControl';
 
 const ALLOWED_BLOCKS_BLACKLIST = [
 	'windmill-blocks/navigation',
@@ -64,8 +53,7 @@ const ALLOWED_BLOCKS_BLACKLIST = [
  * @returns {React.JSX.Element}
  */
 export default function Edit(props) {
-	const { attributes, setAttributes, clientId } = props;
-	const { desktopBreakpoint } = attributes;
+	const { attributes } = props;
 
 	const {
 		/** @ts-ignore */
@@ -89,48 +77,6 @@ export default function Edit(props) {
 	return (
 		<>
 			<div {...innerBlockProps} />
-
-			<InspectorControls group="settings">
-				<ToolsPanel
-					label={__('Navbar')}
-					panelId={clientId}
-					resetAll={(filters) =>
-						filters?.forEach((filter) => filter())
-					}
-				>
-					<ToolsPanelItem
-						label={__('Size')}
-						panelId={clientId}
-						hasValue={() => desktopBreakpoint !== undefined}
-						resetAllFilter={() =>
-							setAttributes({
-								desktopBreakpoint: undefined,
-							})
-						}
-						onDeselect={() =>
-							setAttributes({
-								desktopBreakpoint: undefined,
-							})
-						}
-						defaultChecked={true}
-						isShownByDefault={true}
-					>
-						<PresetUnitControl
-							label={__('Desktop Breakpoint')}
-							icon={breakpointIcon}
-							value={desktopBreakpoint}
-							onChange={(value) =>
-								setAttributes({
-									desktopBreakpoint:
-										value === undefined
-											? undefined
-											: value.toString(),
-								})
-							}
-						/>
-					</ToolsPanelItem>
-				</ToolsPanel>
-			</InspectorControls>
 		</>
 	);
 }

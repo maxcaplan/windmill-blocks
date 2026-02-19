@@ -17,6 +17,12 @@ import metadata from './block.json';
 /** Frontend styles */
 import './styles/style.scss';
 
+const navbar_mobile_menu_toggle_metadata = {
+	...metadata,
+	name: 'windmill-blocks/navbar-mobile-menu-toggle',
+	title: 'Navbar Mobile Menu Toggle',
+};
+
 /**
  * Register block
  */
@@ -31,13 +37,16 @@ registerBlockType(metadata.name, {
 });
 
 /** @ts-ignore */
-registerBlockType('windmill-blocks/navbar-mobile-menu-toggle', {
-	...metadata,
-	name: 'windmill-blocks/navbar-mobile-menu-toggle',
-	title: 'Navbar Mobile Menu Toggle',
+registerBlockType(navbar_mobile_menu_toggle_metadata, {
+	...navbar_mobile_menu_toggle_metadata,
 	icon: navbarMobileMenuToggleIcon,
 	/** Editor component */
 	edit: Edit,
 	/** Serialized component */
-	save: Save,
+	save: (props) =>
+		Save({
+			...props,
+			// Pass block name to save component
+			name: 'windmill-blocks/navbar-mobile-menu-toggle',
+		}),
 });

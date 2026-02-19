@@ -113,6 +113,9 @@ export default function Edit(props) {
 
 	const innerBlockProps = useInnerBlocksProps(blockProps, {
 		allowedBlocks,
+		template: isNavbarMobileMenuToggleButton
+			? [['core/paragraph', { content: 'Menu' }]]
+			: undefined,
 		orientation: layout?.orientation ?? 'horizontal',
 	});
 

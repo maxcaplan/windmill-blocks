@@ -1,18 +1,14 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "windmill-blocks/navbar",
+	"name": "windmill-blocks/navbar-mobile-menu",
+	"parent": ["windmill-blocks/navbar"],
 	"version": "0.1.0",
-	"title": "Navbar",
+	"title": "Navbar Mobile Menu",
 	"category": "windmill-blocks",
-	"icon": "navigation",
-	"description": "Responsive top level navigation",
+	"icon": "mobile",
+	"description": "Top level navigation mobile menu",
 	"keywords": ["link", "navigation", "menu", "windmill"],
-	"attributes": {
-		"desktopBreakpoint": {
-			"type": "string"
-		}
-	},
 	"supports": {
 		"html": false,
 		"typography": {
@@ -32,21 +28,34 @@
 				"fontSize": true
 			}
 		},
+		"layout": {
+			"default": {
+				"type": "flex",
+				"flexWrap": "nowrap",
+				"justifyContent": "left",
+				"orientation": "horizontal",
+				"verticalAlignment": "center"
+			},
+			"allowJustification": true,
+			"allowOrientation": true,
+			"allowSizingOnChildren": true,
+			"allowVerticalAlignment": true,
+			"allowWrap": true,
+			"allowEditing": true
+		},
 		"spacing": {
 			"margin": true,
-			"padding": true
+			"padding": true,
+			"blockGap": true
 		},
 		"align": true,
 		"alignWide": true,
 		"position": {
 			"sticky": true
-		},
-		"anchor": true
+		}
 	},
 	"textdomain": "windmill-blocks",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
-	"render": "file:./render.php",
-	"viewScript": "file:./view.js",
 	"style": "file:./style-index.css"
 }

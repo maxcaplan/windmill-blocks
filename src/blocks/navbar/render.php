@@ -28,11 +28,12 @@ $windmill_blocks_navbar_generate_block_styles = static function ( $attributes ) 
 
 	$windmill_blocks_block_styles[] = sprintf(
 		'@media only screen and (max-width: %s) {
-	.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-desktop  {
+	.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-desktop {
 		display: none !important;
 	}
 
-	.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-mobile {
+	.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-mobile,
+	.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-mobile-menu {
 		display: flex !important;
 	}
 }
@@ -41,7 +42,8 @@ $windmill_blocks_navbar_generate_block_styles = static function ( $attributes ) 
 	display: flex;
 }
 
-.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-mobile {
+.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-mobile,
+.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-mobile-menu {
 	display: none;
 }',
 		$desktop_breakpoint

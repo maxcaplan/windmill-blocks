@@ -39,7 +39,7 @@ add_filter( 'block_categories_all', __NAMESPACE__ . '\register_block_categories'
 /**
  * Register blocks from `blocks-manifest.php` and registers the block types
  */
-function register_dynamic_blocks() {
+function register_blocks() {
 	if ( function_exists( 'wp_register_block_types_from_metadata_collection' ) ) {
 		wp_register_block_types_from_metadata_collection(
 			WINDMILL_BLOCKS_PLUGIN_DIR . 'build/blocks',
@@ -58,7 +58,43 @@ function register_dynamic_blocks() {
 		}
 	}
 }
-add_action( 'init', __NAMESPACE__ . '\register_dynamic_blocks' );
+add_action( 'init', __NAMESPACE__ . '\register_blocks' );
+
+/**
+ * Register aliases for block types.
+ */
+function register_block_aliases() {
+	$blocks_path = WINDMILL_BLOCKS_PLUGIN_DIR . 'build/blocks/';
+
+	register_block_type(
+		$blocks_path . 'button-group',
+		array(
+			'name' => 'windmill-blocks/navbar-mobile-menu-toggle',
+		)
+	);
+
+	register_block_type(
+		$blocks_path . 'button',
+		array(
+			'name' => 'windmill-blocks/navbar-mobile-menu-toggle-button',
+		)
+	);
+
+	register_block_type(
+		$blocks_path . 'navbar-breakpoint',
+		array(
+			'name' => 'windmill-blocks/navbar-desktop',
+		)
+	);
+
+	register_block_type(
+		$blocks_path . 'navbar-breakpoint',
+		array(
+			'name' => 'windmill-blocks/navbar-mobile',
+		)
+	);
+}
+add_action( 'init', __NAMESPACE__ . '\register_block_aliases', 20 );
 
 /**
  * Register nonce value for API validation

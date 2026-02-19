@@ -1,5 +1,3 @@
-import * as TypeDefs from './typedefs';
-
 /**
  * Wordpress dependencies
  */
@@ -12,12 +10,16 @@ import {
 /**
  * Serialized block component
  *
- * @param {TypeDefs.WindmillBlocksNavbarSaveProps} props
+ * @param {import('@wordpress/blocks').BlockSaveProps} props
  * @returns {React.JSX.Element}
  */
 export default function Save(props) {
+	/**
+	 * Hooks
+	 */
+
 	const blockProps = useBlockProps.save();
-	const innerBlockProps = useInnerBlocksProps.save(blockProps);
+	const innerBlockProps = useInnerBlocksProps.save();
 
 	return <div {...innerBlockProps} />;
 }

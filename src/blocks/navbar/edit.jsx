@@ -1,12 +1,12 @@
 import * as TypeDefs from './typedefs';
 
-import { useEffect, useMemo, useState } from 'react';
-// import { convert } from 'units-css';
+import { useMemo, useState } from 'react';
 
 /**
  * Wordpress dependencies
  */
 import {
+	ToggleControl,
 	__experimentalToolsPanel as ToolsPanel,
 	__experimentalToolsPanelItem as ToolsPanelItem,
 } from '@wordpress/components';
@@ -22,44 +22,13 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { PresetUnitControl } from '@/components/PresetUnitControl';
-import { useBlockBlackList, useThemeSettingsObjects } from '@/hooks';
+import { useThemeSettingsObjects } from '@/hooks';
+import { presetStringParts } from '@/util/theme';
 
 /**
  * Editor styles
  */
 import './styles/editor.scss';
-import { presetStringParts } from '@/util/theme';
-
-const ALLOWED_BLOCKS_BLACKLIST = [
-	'windmill-blocks/navigation',
-	'core/accordion',
-	'core/accordion-heading',
-	'core/accordion-panel',
-	'core/accordion-item',
-	'core/comment-edit-link',
-	'core/comment-reply-link',
-	'core/comments-pagination',
-	'core/comments-pagination-next',
-	'core/comments-pagination-previous',
-	'core/comments-pagination-numbers',
-	'core/embed',
-	'core/file',
-	'core/post-comments-form',
-	'core/post-comments-link',
-	'core/post-navigation-link',
-	'core/query-pagination',
-	'core/query-pagination-next',
-	'core/query-pagination-previous',
-	'core/query-pagination-numbers',
-	'core/read-more',
-	'core/tab',
-	'core/tab-panel',
-	'core/tabs',
-	'core/tabs-menu',
-	'core/tabs-menu-item',
-	'core/table-of-contents',
-	'core/video',
-];
 
 /**
  * Block editor component
@@ -71,10 +40,11 @@ export default function Edit(props) {
 	const { attributes, setAttributes, clientId } = props;
 	const { desktopBreakpoint } = attributes;
 
-	const {
-		/** @ts-ignore */
-		layout,
-	} = attributes;
+	/**
+	 * State
+	 */
+
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	/**
 	 * Hooks
@@ -103,7 +73,8 @@ export default function Edit(props) {
 		display: none !important;
 	}
 
-	.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-mobile {
+	.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-mobile,
+	.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-mobile-menu {
 		display: flex !important;
 	}
 }
@@ -112,23 +83,22 @@ export default function Edit(props) {
 	display: flex;
 }
 
-.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-mobile {
+.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-mobile,
+.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-mobile-menu {
 	display: none;
 }`;
 	}, [breakpointWidth]);
 
-	const allowedBlocks = useBlockBlackList
-		.byName(ALLOWED_BLOCKS_BLACKLIST)
-		.map((block) => block.name);
-
 	const blockProps = useBlockProps();
 	const innerBlockProps = useInnerBlocksProps(blockProps, {
-		allowedBlocks,
-		template: [
-			['windmill-blocks/navbar-desktop'],
-			['windmill-blocks/navbar-mobile'],
+		allowedBlocks: [
+			'windmill-blocks/navbar-inner',
+			'windmill-blocks/navbar-mobile-menu',
 		],
-		orientation: layout?.orientation ?? 'horizontal',
+		template: [
+			['windmill-blocks/navbar-inner'],
+			['windmill-blocks/navbar-mobile-menu'],
+		],
 	});
 
 	return (
@@ -136,7 +106,11 @@ export default function Edit(props) {
 			<style className="windmill-blocks-navbar-breakpoint-styles">
 				{mediaQueryCss}
 			</style>
-			<nav {...innerBlockProps} />
+
+			<nav
+				{...innerBlockProps}
+				{...(isMenuOpen ? { ['data-mobile-menu-open']: true } : {})}
+			/>
 
 			<InspectorControls group="settings">
 				<ToolsPanel
@@ -177,6 +151,12 @@ export default function Edit(props) {
 							}
 						/>
 					</ToolsPanelItem>
+
+					<ToggleControl
+						label={__('Show Mobile Menu')}
+						checked={isMenuOpen}
+						onChange={() => setIsMenuOpen((state) => !state)}
+					/>
 				</ToolsPanel>
 			</InspectorControls>
 		</>

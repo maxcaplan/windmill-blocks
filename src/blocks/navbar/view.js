@@ -4,7 +4,7 @@
  */
 const onHamburgerMenuButtonClick = (e, navbar_element) => {
 	e.preventDefault();
-	console.log('click', navbar_element);
+	navbar_element.toggleAttribute('data-mobile-menu-open');
 };
 
 const attachEventListeners = () => {
@@ -13,7 +13,7 @@ const attachEventListeners = () => {
 		.forEach((navbar_element) => {
 			navbar_element
 				.querySelectorAll(
-					'.wp-block-windmill-blocks-button.is-hamburger-menu-button'
+					'.wp-block-windmill-blocks-navbar-mobile-menu-toggle-button'
 				)
 				.forEach((menu_element) => {
 					menu_element.addEventListener('click', (e) =>

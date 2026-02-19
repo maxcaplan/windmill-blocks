@@ -1,3 +1,10 @@
 /**
  * Frontend and editor block styles
  */
+
+.wp-block-windmill-blocks-navbar {
+	&:not([data-mobile-menu-open])
+		.wp-block-windmill-blocks-navbar-mobile-menu {
+		display: none !important;
+	}
+}
