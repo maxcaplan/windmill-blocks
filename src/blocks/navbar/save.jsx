@@ -3,11 +3,7 @@ import * as TypeDefs from './typedefs';
 /**
  * Wordpress dependencies
  */
-import {
-	InnerBlocks,
-	useBlockProps,
-	useInnerBlocksProps,
-} from '@wordpress/block-editor';
+import { InnerBlocks } from '@wordpress/block-editor';
 
 /**
  * Serialized block component

@@ -1,0 +1,10 @@
+/**
+ * Frontend and editor block styles
+ */
+.wp-block-windmill-blocks-mega-menu {
+	&:not([data-mega-menu-open]) {
+		.wp-block-windmill-blocks-mega-menu-menu {
+			display: none !important;
+		}
+	}
+}

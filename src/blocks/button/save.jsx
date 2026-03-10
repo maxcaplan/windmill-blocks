@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 /**
  * Wordpress dependencies
  */
@@ -7,7 +9,6 @@ import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
  * Internal dependencies
  */
 import useButtonBlockProps from './props';
-import { useMemo } from 'react';
 
 /**
  * @typedef {{ tagName?: "a" | "button" } & React.AnchorHTMLAttributes<HTMLAnchorElement> & React.ButtonHTMLAttributes<HTMLButtonElement>} BlockTagProps
@@ -37,8 +38,9 @@ export default function Save(props) {
 
 	const isButtonTag = tagName !== 'a';
 
-	const isNavbarMobileMenuToggleButton =
-		name === 'windmill-blocks/navbar-mobile-menu-toggle-button';
+	const isVariant =
+		name === 'windmill-blocks/navbar-mobile-menu-toggle-button' ||
+		name === 'windmill-blocks/mega-menu-toggle-button';
 
 	/**
 	 * Hooks
@@ -46,9 +48,7 @@ export default function Save(props) {
 
 	const buttonStyles = useButtonBlockProps(
 		attributes,
-		isNavbarMobileMenuToggleButton
-			? 'wp-block-windmill-blocks-button'
-			: undefined
+		isVariant ? 'wp-block-windmill-blocks-button' : undefined
 	);
 
 	const blockProps = useBlockProps.save({ ...buttonStyles });

@@ -25,12 +25,16 @@ export default function Edit(props) {
 	const isNavbarMobileMenuToggle =
 		name === 'windmill-blocks/navbar-mobile-menu-toggle';
 
+	const isMegaMenuToggle = name === 'windmill-blocks/mega-menu-toggle';
+
+	const isVariant = isNavbarMobileMenuToggle || isMegaMenuToggle;
+
 	/**
 	 * Hooks
 	 */
 
 	const blockProps = useBlockProps({
-		className: isNavbarMobileMenuToggle
+		className: isVariant
 			? 'wp-block-windmill-blocks-button-group'
 			: undefined,
 	});
@@ -38,13 +42,17 @@ export default function Edit(props) {
 		allowedBlocks: [
 			isNavbarMobileMenuToggle
 				? 'windmill-blocks/navbar-mobile-menu-toggle-button'
-				: 'windmill-blocks/button',
+				: isMegaMenuToggle
+					? 'windmill-blocks/mega-menu-toggle-button'
+					: 'windmill-blocks/button',
 		],
 		template: [
 			[
 				isNavbarMobileMenuToggle
 					? 'windmill-blocks/navbar-mobile-menu-toggle-button'
-					: 'windmill-blocks/button',
+					: isMegaMenuToggle
+						? 'windmill-blocks/mega-menu-toggle-button'
+						: 'windmill-blocks/button',
 			],
 		],
 		templateInsertUpdatesSelection: true,

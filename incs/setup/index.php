@@ -93,6 +93,20 @@ function register_block_aliases() {
 			'name' => 'windmill-blocks/navbar-mobile',
 		)
 	);
+
+	register_block_type(
+		$blocks_path . 'button-group',
+		array(
+			'name' => 'windmill-blocks/mega-menu-toggle',
+		)
+	);
+
+	register_block_type(
+		$blocks_path . 'button',
+		array(
+			'name' => 'windmill-blocks/mega-menu-toggle-button',
+		)
+	);
 }
 add_action( 'init', __NAMESPACE__ . '\register_block_aliases', 20 );
 

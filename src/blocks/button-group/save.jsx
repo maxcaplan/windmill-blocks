@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 /**
  * Wordpress dependencies
  */
@@ -14,15 +12,16 @@ import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
 export default function Save(props) {
 	const { name } = props;
 
-	const isNavbarMobileMenuToggle =
-		name === 'windmill-blocks/navbar-mobile-menu-toggle';
+	const isVariant =
+		name === 'windmill-blocks/navbar-mobile-menu-toggle' ||
+		name === 'windmill-blocks/mega-menu-toggle';
 
 	/**
 	 * Hooks
 	 */
 
 	const blockProps = useBlockProps.save({
-		className: isNavbarMobileMenuToggle
+		className: isVariant
 			? 'wp-block-windmill-blocks-button-group'
 			: undefined,
 	});

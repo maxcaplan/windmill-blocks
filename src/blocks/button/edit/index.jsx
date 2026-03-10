@@ -78,6 +78,10 @@ export default function Edit(props) {
 		layout,
 	} = attributes;
 
+	const isVariant =
+		name === 'windmill-blocks/navbar-mobile-menu-toggle-button' ||
+		name === 'windmill-blocks/mega-menu-toggle-button';
+
 	const isNavbarMobileMenuToggleButton =
 		name === 'windmill-blocks/navbar-mobile-menu-toggle-button';
 
@@ -101,9 +105,7 @@ export default function Edit(props) {
 
 	const buttonStyles = useButtonBlockProps(
 		attributes,
-		isNavbarMobileMenuToggleButton
-			? 'wp-block-windmill-blocks-button'
-			: undefined
+		isVariant ? 'wp-block-windmill-blocks-button' : undefined
 	);
 
 	const blockProps = useBlockProps({

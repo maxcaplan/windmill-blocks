@@ -5,6 +5,7 @@ import { registerBlockType } from '@wordpress/blocks';
 import {
 	buttons as blockIcon,
 	menu as navbarMobileMenuToggleIcon,
+	page as megaMenuToggleIcon,
 } from '@wordpress/icons';
 
 /**
@@ -21,6 +22,12 @@ const navbar_mobile_menu_toggle_metadata = {
 	...metadata,
 	name: 'windmill-blocks/navbar-mobile-menu-toggle',
 	title: 'Navbar Mobile Menu Toggle',
+};
+
+const mega_menu_toggle_metadata = {
+	...metadata,
+	name: 'windmill-blocks/mega-menu-toggle',
+	title: 'Mega Menu Toggle',
 };
 
 /**
@@ -48,5 +55,20 @@ registerBlockType(navbar_mobile_menu_toggle_metadata, {
 			...props,
 			// Pass block name to save component
 			name: 'windmill-blocks/navbar-mobile-menu-toggle',
+		}),
+});
+
+/** @ts-ignore */
+registerBlockType(mega_menu_toggle_metadata, {
+	...mega_menu_toggle_metadata,
+	icon: megaMenuToggleIcon,
+	/** Editor component */
+	edit: Edit,
+	/** Serialized component */
+	save: (props) =>
+		Save({
+			...props,
+			// Pass block name to save component
+			name: 'windmill-blocks/mega-menu-toggle',
 		}),
 });

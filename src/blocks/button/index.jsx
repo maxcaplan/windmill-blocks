@@ -20,6 +20,13 @@ const navbar_mobile_menu_toggle_button_metadata = {
 	parent: ['windmill-blocks/navbar-mobile-menu-toggle'],
 };
 
+const mega_menu_toggle_button_metadata = {
+	...metadata,
+	name: 'windmill-blocks/mega-menu-toggle-button',
+	title: 'Mega Menu Toggle Button',
+	parent: ['windmill-blocks/mega-menu'],
+};
+
 /**
  * Register blocks
  */
@@ -44,5 +51,19 @@ registerBlockType(navbar_mobile_menu_toggle_button_metadata, {
 			...props,
 			// Pass block name to save component
 			name: 'windmill-blocks/navbar-mobile-menu-toggle-button',
+		}),
+});
+
+// @ts-ignore
+registerBlockType(mega_menu_toggle_button_metadata, {
+	...mega_menu_toggle_button_metadata,
+	/** Editor component */
+	edit: Edit,
+	/** Serialized component */
+	save: (props) =>
+		Save({
+			...props,
+			// Pass block name to save component
+			name: 'windmill-blocks/mega-menu-toggle-button',
 		}),
 });
