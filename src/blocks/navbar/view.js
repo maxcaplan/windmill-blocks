@@ -57,26 +57,5 @@
 			});
 	};
 
-	/**
-	 * Disconnect navbar event listeners
-	 */
-	const disconnectEventListeners = () => {
-		if (!Array.isArray(navbars)) {
-			return;
-		}
-
-		navbars.forEach((navbar) => {
-			navbar.toggles.forEach((toggle, toggle_idx) => {
-				if (navbar.toggleCallbacks.length > toggle_idx) {
-					toggle.removeEventListener(
-						'click',
-						navbar.toggleCallbacks[toggle_idx]
-					);
-				}
-			});
-		});
-	};
-
 	window.addEventListener('load', connectEventListeners);
-	window.addEventListener('beforeunload', disconnectEventListeners);
 })();

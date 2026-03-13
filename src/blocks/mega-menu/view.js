@@ -199,22 +199,6 @@
 			});
 	};
 
-	/**
-	 * Disconnect mega menu event listeners
-	 */
-	const disconnectEventListeners = () => {
-		if (!Array.isArray(mega_menus)) {
-			return;
-		}
-
-		mega_menus.forEach((menu) => {
-			menu.element.removeEventListener('blur', menu.blurCallback);
-			menu.toggle.removeEventListener('click', menu.toggleCallback);
-			menu.menu.removeEventListener('click', menu.menuCallback);
-		});
-	};
-
 	// Attach to window load events
 	window.addEventListener('load', connectEventListeners);
-	window.addEventListener('beforeunload', disconnectEventListeners);
 })();
