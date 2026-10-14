@@ -15,7 +15,7 @@
 		"makepot": "wp i18n make-pot ."
 	},
 	"require": {
-		"php": "8.3.*",
+		"php": "8.*",
 		"composer/installers": "^2.3",
 		"enshrined/svg-sanitize": "^0.22.0"
 	},

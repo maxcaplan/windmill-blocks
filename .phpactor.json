@@ -1,4 +1,5 @@
 {
 	"$schema": "/home/max/.config/phpactor.schema.json",
-	"php_code_sniffer.enabled": true
+	"php_code_sniffer.enabled": true,
+	"indexer.max_filesize_to_index": 9000000
 }
