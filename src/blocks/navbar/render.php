@@ -7,7 +7,16 @@
 
 namespace WindmillBlocks\Blocks\Navbar;
 
-$windmill_blocks_navbar_generate_block_styles = static function ( $attributes ) {
+global $windmill_blocks_block_styles;
+
+/**
+ * Get a string value for the blocks desktop breakpoint
+ *
+ * @param array $attributes Array of block attributes.
+ *
+ * @return string
+ */
+function windmill_blocks_get_desktop_breakpoint( $attributes ): string {
 	$desktop_breakpoint = $attributes['desktopBreakpoint'] ?? null;
 
 	if ( ! isset( $desktop_breakpoint ) || ! is_string( $desktop_breakpoint ) ) {
@@ -20,43 +29,51 @@ $windmill_blocks_navbar_generate_block_styles = static function ( $attributes ) 
 		}
 	}
 
-	global $windmill_blocks_block_styles;
-
-	if ( ! isset( $windmill_blocks_block_styles ) ) {
-		$windmill_blocks_block_styles = array();
-	}
-
-	$windmill_blocks_block_styles[] = sprintf(
-		'@media only screen and (max-width: %s) {
-	.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-desktop {
-		display: none !important;
-	}
-
-	.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-mobile,
-	.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-mobile-menu {
-		display: flex !important;
-	}
+	return $desktop_breakpoint;
 }
 
-.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-desktop {
-	display: flex;
+$windmill_blocks_navbar_id                 = uniqid( 'windmill-blocks-navbar-' );
+$windmill_blocks_navbar_desktop_breakpoint = windmill_blocks_get_desktop_breakpoint( $attributes );
+
+// Create global block styles array if not set.
+if ( ! isset( $windmill_blocks_block_styles ) ) {
+	$windmill_blocks_block_styles = array();
 }
 
-.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-mobile,
-.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-mobile-menu {
-	display: none;
+// Add navbar styles to global block styles.
+$windmill_blocks_block_styles[] = sprintf(
+	'@media only screen and (max-width: %s) {
+.%s .wp-block-windmill-blocks-navbar-desktop {
+	display: none !important;
+}
+
+.%s .wp-block-windmill-blocks-navbar-mobile,
+.%s .wp-block-windmill-blocks-navbar-mobile-menu {
+	display: flex !important;
+}
 }',
-		$desktop_breakpoint
-	);
-};
-
-
-$windmill_blocks_navbar_generate_block_styles( $attributes );
+	$windmill_blocks_navbar_desktop_breakpoint,
+	$windmill_blocks_navbar_id,
+	$windmill_blocks_navbar_id,
+	$windmill_blocks_navbar_id
+);
 
 ob_start();
 ?>
 
-<nav <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
+<nav
+	<?php
+	echo wp_kses_data(
+		get_block_wrapper_attributes(
+			array(
+				'class' => $windmill_blocks_navbar_id,
+				'style' => '--wm--block--breakpoint--desktop: ' . $windmill_blocks_navbar_desktop_breakpoint,
+			)
+		)
+	);
+	?>
+	data-desktop-breakpoint="<?php echo $windmill_blocks_navbar_desktop_breakpoint; ?>"
+>
 	<?php echo $content; ?>
 </nav>
 

@@ -3,8 +3,17 @@
  */
 
 .wp-block-windmill-blocks-navbar {
-	&:not([data-mobile-menu-open])
-		.wp-block-windmill-blocks-navbar-mobile-menu {
+	&:not([data-mobile-menu-open]) .wp-block-windmill-blocks-navbar-mobile-menu {
 		display: none !important;
+	}
+
+
+	.wp-block-windmill-blocks-navbar-desktop {
+		display: flex;
+	}
+
+	.wp-block-windmill-blocks-navbar-mobile,
+	.wp-block-windmill-blocks-navbar-mobile-menu {
+		display: none;
 	}
 }

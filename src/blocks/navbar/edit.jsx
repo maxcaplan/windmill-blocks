@@ -1,6 +1,7 @@
 import * as TypeDefs from './typedefs';
 
 import { useMemo, useState } from 'react';
+import clsx from 'clsx';
 
 /**
  * Wordpress dependencies
@@ -31,6 +32,10 @@ import { presetStringParts } from '@/util/theme';
 import './styles/editor.scss';
 
 /**
+ * @typedef {{ '--wm--blocks--breakpoint--desktop'?: string } & React.CSSProperties} NavbarCSSProperties
+ */
+
+/**
  * Block editor component
  *
  * @param {TypeDefs.WindmillBlocksNavbarEditProps} props
@@ -44,11 +49,17 @@ export default function Edit(props) {
 	 * State
 	 */
 
+	const [navbarId] = useState(
+		Date.now().toString(36) + Math.random().toString(36).slice(2)
+	);
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	/**
 	 * Hooks
 	 */
+
+	const navbarClassName = useMemo(() => `windmill-blocks-navbar-${navbarId}`, [navbarId]);
+
 	const spacingSizes = useThemeSettingsObjects('spacing.spacingSizes', {
 		name: 'string',
 		slug: 'string',
@@ -69,28 +80,19 @@ export default function Edit(props) {
 
 	const mediaQueryCss = useMemo(() => {
 		return `@media only screen and (max-width: ${breakpointWidth}) {
-	.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-desktop  {
+	.${navbarClassName} .wp-block-windmill-blocks-navbar-desktop  {
 		display: none !important;
 	}
 
-	.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-mobile,
-	.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-mobile-menu {
+	.${navbarClassName} .wp-block-windmill-blocks-navbar-mobile,
+	.${navbarClassName} .wp-block-windmill-blocks-navbar-mobile-menu {
 		display: flex !important;
 	}
-}
-
-.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-desktop {
-	display: flex;
-}
-
-.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-mobile,
-.wp-block-windmill-blocks-navbar .wp-block-windmill-blocks-navbar-mobile-menu {
-	display: none;
 }`;
-	}, [breakpointWidth]);
+	}, [navbarClassName, breakpointWidth]);
 
 	const blockProps = useBlockProps();
-	const innerBlockProps = useInnerBlocksProps(blockProps, {
+	const { style, className, ...innerBlockProps } = useInnerBlocksProps(blockProps, {
 		allowedBlocks: [
 			'windmill-blocks/navbar-inner',
 			'windmill-blocks/navbar-mobile-menu',
@@ -110,6 +112,9 @@ export default function Edit(props) {
 			<nav
 				{...innerBlockProps}
 				{...(isMenuOpen ? { ['data-mobile-menu-open']: true } : {})}
+				className={clsx(className, navbarClassName)}
+				data-desktop-breakpoint={breakpointWidth}
+				style={/** @type {NavbarCSSProperties} */ ({ ...style, "--wm--blocks--breakpoint--desktop": breakpointWidth })}
 			/>
 
 			<InspectorControls group="settings">
