@@ -41,8 +41,6 @@ define( 'WINDMILL_BLOCKS_UPLOADS_URL', wp_upload_dir()['baseurl'] . '/windmill-b
 /**
  * Require plugin includes.
  */
-require_once WINDMILL_BLOCKS_PLUGIN_DIR . 'vendor/autoload.php';
-
 require_once WINDMILL_BLOCKS_PLUGIN_DIR . 'incs/util/index.php';
 require_once WINDMILL_BLOCKS_PLUGIN_DIR . 'incs/setup/index.php';
 require_once WINDMILL_BLOCKS_PLUGIN_DIR . 'incs/enqueue/index.php';
