@@ -43,6 +43,9 @@ node_modules/*
 src/*
 globals.d.ts
 jsconfig.json
+docker_tag
+DOCKER_ENV
+*.log
 *.sql
 *.tar.gz
 *.zip
