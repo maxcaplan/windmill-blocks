@@ -52,7 +52,13 @@ The project currently includes: [Windmill Theme](https://github.com/maxcaplan/wi
 - pnpm: ^10.28.2
 
 ## Installation
-Windmill Blocks does not currently provide a prepackaged release.
+Download `windmill-blocks.zip` from [the releases page](https://github.com/maxcaplan/windmill-blocks/releases/) (Ensure this file is saved with the same name)
+
+Navigate to the plugin install page on your WordPress admin dashboard. 
+
+Press the `Upload Plugin` button and select `windmill-blocks.zip` from your files.
+
+Press the `Install Plugin` button and Windmill Blocks will be installed or updated to the uploaded version.
 
 ## Setup
 Clone the repository into the `wp-contet/plugins/` directory of a Wordpress installation
