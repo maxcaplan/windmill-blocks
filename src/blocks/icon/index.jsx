@@ -13,10 +13,9 @@ import metadata from './block.json';
 /**
  * Register block
  */
-/** @ts-ignore */
-registerBlockType(metadata.name, {
-	...metadata,
+
+registerBlockType(metadata, {
 	icon: blockIcon,
-	/** Editor component */
-	edit: Edit,
+	edit: (props) => <Edit {...props} />
 });
+

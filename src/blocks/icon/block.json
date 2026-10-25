@@ -2,26 +2,32 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "windmill-blocks/icon",
-	"parent": ["windmill-blocks/icon-group"],
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"title": "Icon",
 	"category": "windmill-blocks",
 	"description": "A small image to convey a meaning",
 	"keywords": ["image", "windmill"],
 	"attributes": {
-		"size": {
-			"type": "string"
-		},
 		"icon": {
-			"type": "string"
+			"type": "string",
+			"role": "content"
 		},
-		"ariaLabel": {
-			"type": "string"
+		"flipHorizontal": {
+			"type": "boolean",
+			"default": false
+		},
+		"flipVertical": {
+			"type": "boolean",
+			"default": false
+		},
+		"rotation": {
+			"type": "number",
+			"default": 0
 		}
 	},
 	"supports": {
-		"html": false,
 		"anchor": true,
+		"html": false,
 		"spacing": {
 			"margin": true,
 			"padding": true
@@ -36,6 +42,13 @@
 			"radius": true,
 			"style": true,
 			"width": true
+		},
+		"align": true,
+		"ariaLabel": true,
+		"dimensions": {
+			"width": true,
+			"minHeight": true,
+			"minWidth": true
 		}
 	},
 	"textdomain": "windmill-blocks",
