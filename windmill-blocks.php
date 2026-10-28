@@ -11,7 +11,7 @@
  * Plugin Name:       Windmill Blocks
  * Description:       Extensible WordPress theme blocks for developers and designers.
  * Version:           0.2.2
- * Requires at least: 6.9
+ * Requires at least: 7.1
  * Requires PHP:      8.3
  * Author:            Max Caplan
  * Author URI:        https://maxcaplan.com
