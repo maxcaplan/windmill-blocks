@@ -1,24 +1,46 @@
-/**
- * Frontend and editor block styles
- */
+//
+// Frontend and editor block styles
+//
 
 .wp-block-windmill-blocks-icon {
-	box-sizing: border-box;
-	display: inline-flex;
-	justify-content: center;
-	align-items: center;
+	:where(&) {
+		position: relative;
+		display: block;
+		line-height: 0;
 
-	.windmill-blocks-icon__inner-icon {
-		flex: 1;
-		width: auto;
-		height: auto;
-		max-width: 100%;
-		max-height: 100%;
+		svg {
+			height: 100%;
+			width: 100%;
+		}
 	}
-}
 
-/** Fallback icon block size */
-.wp-block-windmill-blocks-icon {
-	width: 24px;
-	height: 24px;
+	svg {
+		fill: currentColor;
+		box-sizing: border-box;
+		line-height: 0;
+
+		&.has-stroke-width * {
+			stroke-width: inherit;
+		}
+
+		&.is-flip-horizontal {
+			transform: scaleX(-1);
+		}
+
+		&.is-flip-vertical {
+			transform: scaleY(-1);
+		}
+
+		&.is-flip-horizontal.is-flip-vertical {
+			transform: scaleX(-1) scaleY(-1);
+		}
+
+		&.is-non-scaling-stroke * {
+			vector-effect: non-scaling-stroke;
+		}
+	}
+
+	:root :where(& svg) {
+		width: 24px;
+	}
 }

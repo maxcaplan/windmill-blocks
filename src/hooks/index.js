@@ -12,3 +12,5 @@ export {
 	useThemeSettings,
 	useThemeSettingsObjects,
 } from './use-theme-settings';
+export { useIconNames } from './use-icon-names';
+export { useUploadIcons } from './use-upload-icons';

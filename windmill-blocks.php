@@ -10,8 +10,8 @@
  * @wordpress-plugin
  * Plugin Name:       Windmill Blocks
  * Description:       Extensible WordPress theme blocks for developers and designers.
- * Version:           0.2.2
- * Requires at least: 6.9
+ * Version:           1.0.0
+ * Requires at least: 7.1
  * Requires PHP:      8.3
  * Author:            Max Caplan
  * Author URI:        https://maxcaplan.com
@@ -44,4 +44,3 @@ define( 'WINDMILL_BLOCKS_UPLOADS_URL', wp_upload_dir()['baseurl'] . '/windmill-b
 require_once WINDMILL_BLOCKS_PLUGIN_DIR . 'incs/util/index.php';
 require_once WINDMILL_BLOCKS_PLUGIN_DIR . 'incs/setup/index.php';
 require_once WINDMILL_BLOCKS_PLUGIN_DIR . 'incs/enqueue/index.php';
-require_once WINDMILL_BLOCKS_PLUGIN_DIR . 'incs/api/index.php';

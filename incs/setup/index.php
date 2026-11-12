@@ -7,6 +7,8 @@
 
 namespace WindmillBlocks\Setup;
 
+require_once WINDMILL_BLOCKS_PLUGIN_DIR . 'incs/setup/rest.php';
+require_once WINDMILL_BLOCKS_PLUGIN_DIR . 'incs/setup/block-bindings.php';
 require_once WINDMILL_BLOCKS_PLUGIN_DIR . 'incs/setup/global-styles.php';
 
 // Exit if accessed directly.
