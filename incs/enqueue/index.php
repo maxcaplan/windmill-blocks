@@ -81,6 +81,11 @@ function enqueue_editor_content_styles() {
 		return;
 	}
 
+	// Ensure `wp-components` is a style dependency.
+	if ( ! in_array( 'wp-components', $asset_meta['dependencies'], true ) ) {
+		$asset_meta['dependencies'][] = 'wp-components';
+	}
+
 	wp_enqueue_style(
 		'windmill-blocks-editor-content-style',
 		WINDMILL_BLOCKS_PLUGIN_URL . 'build/css/editor.css',
