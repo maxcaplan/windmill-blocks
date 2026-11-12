@@ -1,21 +1,14 @@
 import { registerBlockType } from '@wordpress/blocks';
 import { starFilled as blockIcon } from '@wordpress/icons';
 
-/** Frontend styles */
+import Edit from './edit';
+
 import './styles/style.scss';
 
-/**
- * Internal dependencies
- */
-import Edit from './edit';
 import metadata from './block.json';
 
-/**
- * Register block
- */
-
+/** @ts-ignore */
 registerBlockType(metadata, {
 	icon: blockIcon,
-	edit: (props) => <Edit {...props} />
+	edit: Edit,
 });
-

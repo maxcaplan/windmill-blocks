@@ -3,5 +3,44 @@
 //
 
 .wp-block-windmill-blocks-icon {
-	display: block;
+	:where(&) {
+		position: relative;
+		display: block;
+		line-height: 0;
+
+		svg {
+			height: 100%;
+			width: 100%;
+		}
+	}
+
+	svg {
+		fill: currentColor;
+		box-sizing: border-box;
+		line-height: 0;
+
+		&.has-stroke-width * {
+			stroke-width: inherit;
+		}
+
+		&.is-flip-horizontal {
+			transform: scaleX(-1);
+		}
+
+		&.is-flip-vertical {
+			transform: scaleY(-1);
+		}
+
+		&.is-flip-horizontal.is-flip-vertical {
+			transform: scaleX(-1) scaleY(-1);
+		}
+
+		&.is-non-scaling-stroke * {
+			vector-effect: non-scaling-stroke;
+		}
+	}
+
+	:root :where(& svg) {
+		width: 24px;
+	}
 }
