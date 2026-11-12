@@ -10,5 +10,6 @@ import metadata from './block.json';
 /** @ts-ignore */
 registerBlockType(metadata, {
 	icon: blockIcon,
+	title: 'Custom Icon',
 	edit: Edit,
 });
