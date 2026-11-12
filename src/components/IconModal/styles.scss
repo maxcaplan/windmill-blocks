@@ -1,0 +1,89 @@
+.wm-blocks-icon-modal {
+	&__body {
+		height: 100%;
+		position: relative;
+	}
+
+	&__root {
+		display: grid;
+		grid-template-rows: min-content 1fr;
+		height: 100%;
+	}
+
+	&__tabpanel {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		overflow: auto;
+
+		&>* {
+			flex-grow: 1;
+		}
+	}
+
+	&__library {
+		display: flex;
+		flex-direction: row;
+
+		height: 100%;
+
+		&__header {
+			padding-top: var(--wpds-dimension-padding-sm, 8px) !important;
+			padding-bottom: var(--wpds-dimension-padding-sm, 8px) !important;
+		}
+
+		&__body {
+			flex-grow: 1;
+			height: 100%;
+
+			&>:first-child {
+				margin-top: -1px;
+			}
+
+			&>:last-child {
+				flex-grow: 1;
+				border-bottom-width: 0;
+			}
+		}
+	}
+
+	&__upload {
+		height: 100%;
+
+		&__body {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100%;
+		}
+
+		&__dialog {
+			margin-bottom: 42px;
+		}
+	}
+
+	&__sidebar {
+		width: 267px;
+		flex-grow: 0;
+
+		border-top-width: 0;
+		border-bottom-width: 0;
+
+		&:first-child {
+			border-left-width: 0;
+		}
+
+		&:last-child {
+			border-right-width: 0;
+		}
+	}
+
+	&__notices {
+		&--snackbar {
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
+	}
+}
