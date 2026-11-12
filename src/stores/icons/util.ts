@@ -89,6 +89,8 @@ const isIconDeleteResponse = (value: any): value is IconDeleteResponse => {
  * Fetch icon data for a given icon name
  */
 export const fetchIconData = async (name: string) => {
+	name = parseIconName(name);
+
 	// Fetch icon data
 	const response = await apiFetch({
 		path: `/windmill-blocks/v1/icons/${name}`,
@@ -111,6 +113,8 @@ export const uploadIconData = async (
 	name?: string,
 	{ max_file_size = UPLOAD_MAX_SIZE }: UploadIconArgs = {}
 ) => {
+	name = !!name ? parseIconName(name) : name;
+
 	// Ensure file is correct type
 	if (!(file instanceof File) || file.type !== 'image/svg+xml') {
 		throw new Error('File is not of type image/svg+xml.');
@@ -146,7 +150,7 @@ export const uploadIconData = async (
  * Delete an icon with a provided name
  */
 export const deleteIconData = async (name: string) => {
-	name = name.trim();
+	name = parseIconName(name);
 
 	if (!name) {
 		throw new Error('Invalid icon name.');

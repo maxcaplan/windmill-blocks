@@ -117,7 +117,6 @@ const iconNamesReducer = (
 		case IconNamesActionType.FailRequest:
 			// Ignore fails from stale requests
 			if (action.request_id !== state.request_id) {
-				console.log('stale error');
 				return state;
 			}
 
@@ -133,7 +132,6 @@ const iconNamesReducer = (
 		case IconNamesActionType.ReceiveData:
 			// Ignore data from stale requests
 			if (action.request_id !== state.request_id) {
-				console.log('stale data');
 				return state;
 			}
 

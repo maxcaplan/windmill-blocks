@@ -1,17 +1,19 @@
+import { JSX, ReactNode } from 'react';
+
 //
 // Component types
 //
 
-import { JSX, ReactNode } from 'react';
-
-export type IconControlComponent = (props: IconControlProps) => JSX.Element;
+export type IconControlComponent = (
+	props: IconControlProps & Omit<IconControlToggleButtonProps, 'children'>
+) => JSX.Element;
 
 export type IconControlLabelComponent = (
-	props: IconControlLabelProps
+	props: IconControlLabelProps & React.ComponentPropsWithRef<'div'>
 ) => JSX.Element;
 
 export type IconControlToggleComponent = (
-	props: IconControlToggleProps
+	props: IconControlToggleProps & IconControlToggleButtonProps
 ) => JSX.Element;
 
 export type IconControlContentComponent = (
@@ -24,9 +26,6 @@ export type IconControlContentComponent = (
 
 interface IconControlBaseProps {
 	value?: string;
-
-	/** Allow uploading multiple files at once */
-	multiple?: boolean;
 }
 
 interface IconControlInnerProps extends IconControlBaseProps {
@@ -40,43 +39,43 @@ interface IconControlInnerProps extends IconControlBaseProps {
 	onClose: () => void;
 }
 
-export interface IconControlProps extends IconControlBaseProps {
+export interface IconControlProps
+	extends
+		Omit<IconControlToggleProps, keyof IconControlInnerProps>,
+		IconControlBaseProps {
 	/** On icons uploaded to library */
 	onIconsUploaded?: (names: string[]) => void;
 
 	/** Icon selected */
 	onChange?: (value?: string) => void;
 
+	/** If provided, renders a tooltip for the component */
+	tooltip?: string;
+
 	/** Control has a file dropzone */
-	dropzone?: boolean;
+	withDropzone?: boolean;
 
 	/** Control has a reset button */
-	resetButton?: boolean;
+	withResetButton?: boolean;
+}
 
-	/** Control toggle label */
-	label?: IconControlLabelCallback | string;
-
+export interface IconControlToggleProps
+	extends IconControlLabelProps, IconControlInnerProps {
 	/** Control toggle render callback */
 	renderToggle?: IconControlRenderToggleCallback;
 }
 
-export interface IconControlToggleProps extends IconControlInnerProps {
-	/** Control toggle label */
-	label?: IconControlLabelCallback | string;
-
-	/** Control toggle render callback */
-	renderToggle?: IconControlRenderToggleCallback;
-
-	'aria-haspopup'?: string;
-	'aria-expanded'?: boolean;
-}
+type IconControlToggleButtonProps = Omit<
+	React.ComponentPropsWithRef<'button'>,
+	'onChange'
+>;
 
 export interface IconControlLabelProps extends Omit<
 	IconControlInnerProps,
 	'onToggle' | 'onClose'
 > {
 	/** Control toggle label */
-	label?: IconControlLabelCallback | string;
+	renderLabel?: IconControlRenderLabelCallback | string;
 }
 
 export interface IconControlContentProps extends IconControlInnerProps {
@@ -96,10 +95,14 @@ export interface IconControlContentProps extends IconControlInnerProps {
 // Callback types
 //
 
-export type IconControlLabelCallback = (
-	props: Omit<IconControlLabelProps, 'label'>
+export type IconControlRenderLabelCallback = (
+	props: React.ComponentPropsWithRef<'div'>,
+	state: Omit<IconControlLabelProps, 'renderLabel'>
 ) => ReactNode;
 
 export type IconControlRenderToggleCallback = (
-	props: React.PropsWithChildren<Omit<IconControlToggleProps, 'renderToggle'>>
+	props: IconControlToggleButtonProps,
+	state: React.PropsWithChildren<
+		Omit<IconControlToggleProps, 'renderToggle' | 'renderLabel'>
+	>
 ) => ReactNode;

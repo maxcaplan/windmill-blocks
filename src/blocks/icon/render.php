@@ -109,9 +109,10 @@ if ( ! function_exists( __NAMESPACE__ . '\render_block' ) ) {
 		$icon_content = WM_Blocks_Icons::get_instance()->get_icon(
 			$icon,
 			array(
-				'classnames' => $styles['classnames'] ?? null,
-				'style'      => $styles['css'] ?? null,
-				'aria-label' => $attributes['ariaLabel'] ?? '',
+				'class'        => $styles['classnames'] ?? null,
+				'style'        => $styles['css'] ?? null,
+				'stroke-width' => $attributes['strokeWidth'] ?? null,
+				'aria-label'   => $attributes['ariaLabel'] ?? '',
 			)
 		);
 

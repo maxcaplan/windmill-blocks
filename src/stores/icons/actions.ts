@@ -200,7 +200,6 @@ export const uploadIcons =
 					);
 					results.push(data);
 				} catch (error) {
-					console.error(error)
 					await dispatch._receiveIconError(
 						request.name,
 						error,
@@ -254,7 +253,6 @@ export const replaceIcon =
 				request.request_id
 			);
 		} catch (error) {
-			console.error(error);
 			await dispatch._receiveIconError(
 				request.name,
 				error,

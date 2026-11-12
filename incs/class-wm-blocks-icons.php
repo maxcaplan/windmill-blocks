@@ -109,7 +109,6 @@ if ( ! class_exists( __NAMESPACE__ . '\WM_Blocks_Icons' ) ) {
 		 */
 		public static function get_instance(): WM_Blocks_Icons {
 			if ( empty( self::$instance ) ) {
-				error_log( 'New instance of WM_Blocks_Icons created' );
 				self::$instance = new self();
 			}
 
@@ -131,7 +130,7 @@ if ( ! class_exists( __NAMESPACE__ . '\WM_Blocks_Icons' ) ) {
 		 * Get SVG content string for a given icon
 		 *
 		 * @param string                $name Name of the icon to get content for.
-		 * @param array<string, string> $attributes Array of attributes to add to the icon content
+		 * @param array<string, string> $attributes Array of attributes to add to the icon content.
 		 */
 		public function get_icon( string $name, array $attributes = array() ): string|false {
 
@@ -353,7 +352,7 @@ if ( ! class_exists( __NAMESPACE__ . '\WM_Blocks_Icons' ) ) {
 					return false;
 				}
 
-				// Set attributes
+				// Set attributes.
 				foreach ( $attributes as $attribute_name => $attribute_value ) {
 					$root_element->setAttribute( $attribute_name, $attribute_value );
 				}
